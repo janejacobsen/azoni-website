@@ -19,7 +19,7 @@ const App = () => {
             interacts with users with just a few lines of code.
           </p>
           <button className="btn learn-more">Learn More</button>
-        </section>./. /
+        </section>
 
         <section className="card">
           <h2 className="card-title">Install Azoni AI</h2>
