@@ -6,7 +6,7 @@ const App = () => {
   return (
     <div className="container">
       <header className="header">
-        <h1 className="title">Azoni AI</h1>
+        <h1 className="title">Azoni AI - Under construction. Nothing to see here.</h1>
         <p className="subtitle">Unleash the Power of Personalized AI</p>
       </header>
 
@@ -19,7 +19,7 @@ const App = () => {
             interacts with users with just a few lines of code.
           </p>
           <button className="btn learn-more">Learn More</button>
-        </section>
+        </section>./. /
 
         <section className="card">
           <h2 className="card-title">Install Azoni AI</h2>
