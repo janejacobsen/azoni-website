@@ -57,7 +57,20 @@ const App = () => {
       </section>
 
       <footer className="footer">
-        <p className="footer-text">&copy; {new Date().getFullYear()} Azoni AI. All Rights Reserved.</p>
+        <div className="footer-text">
+          <p>&copy; {new Date().getFullYear()} Azoni AI. All Rights Reserved.</p>
+          <div className="social-links">
+            <a href="https://x.com/azoniAI" target="_blank" rel="noopener noreferrer">
+              X
+            </a>
+            <a href="https://github.com/azoni" target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+            <a href="https://linkedin.com/in/charltonsmith" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          </div>
+        </div>
       </footer>
     </div>
   );
