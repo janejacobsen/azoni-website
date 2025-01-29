@@ -7,7 +7,18 @@ body {
   background: linear-gradient(135deg, #1e293b, #111827);
   color: #ffffff;
 }
+/* Styled Links */
+.styled-link {
+  color: #61dafb;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
 
+.styled-link:hover {
+  color: #1e90ff;
+  text-decoration: underline;
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -16,11 +27,6 @@ body {
   padding: 20px;
 }
 
-/* Header */
-.header {
-  text-align: center;
-  margin-bottom: 40px;
-}
 
 .title {
   font-size: 3rem;
@@ -42,6 +48,20 @@ body {
   gap: 20px;
   max-width: 900px;
   width: 100%;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+  background: rgba(31, 41, 55, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .card {
@@ -178,7 +198,7 @@ body {
 }
 
 .social-links a {
-  color: #000;
+  color: #ffffff;
   text-decoration: none;
   font-weight: bold;
 }
