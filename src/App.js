@@ -36,7 +36,7 @@ const Home = () => {
           <h2 className="card-title">Install Azoni AI</h2>
           <p className="card-text">Get started quickly with the following command:</p>
           <div className="code-block">pip install azoni</div>
-          <button className="btn documentation">View Documentation</button>
+          <button className="btn documentation" href="https://github.com/azoni/azoni-package">View Documentation</button>
         </section>
       </main>
 
@@ -77,7 +77,7 @@ const WhoIAm = () => {
     <div className="container">
       <header className="header">
         <h1 className="title">Who I Am</h1>
-        <Link to="/" className="header-link">Back to Home</Link>
+        <Link to="/" className="header-link styled-link">Back to Home</Link>
       </header>
       <main className="main">
         <p className="card-text">I'm Charlton Smith, a business-focused software engineer specializing in AI and game development.</p>
@@ -112,8 +112,9 @@ const Projects = () => {
     },
     {
       title: "Project Three",
-      description: "Details about Project Three and its impact.",
-      image: "https://via.placeholder.com/300",
+      description: "Details about Project Three and its impact. https://adoh-dps.netlify.app/ https://github.com/azoni/adoh-dps https://github.com/azoni/adoh-dps-backend",
+      image: "./public/logo512.png",
+      github: "https://github.com/azoni/adoh-dps"
     },
   ];
 
@@ -129,6 +130,7 @@ const Projects = () => {
             <img src={project.image} alt={project.title} className="project-image" />
             <h2 className="project-title">{project.title}</h2>
             <p className="project-description">{project.description}</p>
+            <a href={project.github} target="_blank" rel="noopener noreferrer">GitHub</a>
           </div>
         ))}
       </main>
