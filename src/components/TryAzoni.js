@@ -13,6 +13,9 @@ const TryAzoni = () => {
   return (
     <section className="try-section">
       <h2 className="try-title">Try Azoni AI Now</h2>
+        <section className="card">
+          <div className="code-block">pip install azoni (Coming soon...)</div>
+        </section>
       <p className="try-text">Input a personality and experience Azoni AI in action.</p>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
