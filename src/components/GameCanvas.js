@@ -168,7 +168,7 @@ const GameCanvas = () => {
         }} />
       ) : (
         <>
-          <canvas ref={canvasRef} className="game-canvas" width="800" height="600"></canvas>
+          <canvas ref={canvasRef} className="game-canvas" width="1100" height="600"></canvas>
           
           <input
             ref={inputRef}
