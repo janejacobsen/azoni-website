@@ -10,6 +10,7 @@ const Controls = () => {
         <li><strong>Enter:</strong> Start typing / Send message</li>
         <li><strong>Escape:</strong> Cancel typing</li>
         <li><strong>Click:</strong> Move to position</li>
+        <li><strong>"I":</strong> Inventory</li>
       </ul>
     </div>
   )

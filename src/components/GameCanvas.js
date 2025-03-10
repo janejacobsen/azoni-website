@@ -4,6 +4,7 @@ import AICharacter from "./AICharacter";
 import Controls from "./Controls";
 import Skills from "./Skills";
 import TreePlacement from "./TreePlacement";
+import Inventory from "./Inventory";
 
 import "../styles/GameCanvas.css";
 
@@ -23,6 +24,19 @@ const GameCanvas = () => {
   const [ws, setWs] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
   const [woodcuttingXP, setWoodcuttingXP] = useState(0);
+  const [inventory, setInventory] = useState({});
+  const [isInventoryOpen, setIsInventoryOpen] = useState(false);
+
+  useEffect(() => {
+    const toggleInventory = (event) => {
+      if (event.key === "i" || event.key === "I") {
+        setIsInventoryOpen((prev) => !prev);
+      }
+    };
+  
+    window.addEventListener("keydown", toggleInventory);
+    return () => window.removeEventListener("keydown", toggleInventory);
+  }, []);
 
   useEffect(() => {
     if (chatRef.current) {
@@ -55,8 +69,13 @@ const GameCanvas = () => {
   const handleChopTree = (tree) => {
     console.log(`Chopped ${tree.index}! Gained ${tree.chopTime * 10} XP.`);
     setWoodcuttingXP(prevXP => prevXP + tree.chopTime * 10);
-    ws.send(JSON.stringify({ type: "chat", text: `Chopped ${tree.index}! Gained ${tree.chopTime * 10} XP.` }));
+    ws.send(JSON.stringify({ type: "chat", text: `Chopped! Gained ${tree.chopTime * 10} XP.` }));
     // Later, we will add XP, inventory updates, and tree respawn logic here.
+    console.log(inventory)
+    setInventory((prev) => ({
+      ...prev, 
+      [tree.image]: (prev[tree.image] || 0) + Math.floor(Math.random() * 3) + 1 // 1- 3
+    }));
   };
   
   const sendChat = useCallback(() => {
@@ -223,6 +242,21 @@ const GameCanvas = () => {
       ) : (
         <>
           <Controls />
+          <Inventory inventory={inventory} isOpen={isInventoryOpen} onClose={() => setIsInventoryOpen(false)} />
+          <button
+            onClick={() => setIsInventoryOpen((prev) => !prev)}
+            style={{
+              position: "absolute",
+              bottom: "20px",
+              right: "20px",
+              width: "50px",
+              height: "50px",
+              background: "url('/icons/inventory.png') no-repeat center",
+              backgroundSize: "contain",
+              border: "none",
+              cursor: "pointer"
+            }}
+          ></button>
           <Skills woodcuttingXP={woodcuttingXP}/>
           <TreePlacement playerX={playerX} playerY={playerY} onChopTree={handleChopTree} />
           <canvas ref={canvasRef} className="game-canvas"></canvas>
@@ -259,7 +293,7 @@ const GameCanvas = () => {
               overflowY: "auto",
             }}
           >
-            {chatHistory.slice(-30).map((msg, index) => (
+            {chatHistory.slice(-100).map((msg, index) => (
               <div key={index}>
                 <strong>{msg.name}:</strong> {msg.text}
               </div>
