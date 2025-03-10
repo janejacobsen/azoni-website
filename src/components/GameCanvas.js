@@ -110,6 +110,10 @@ const GameCanvas = () => {
   // ✅ Ensure canvas re-renders when players update
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (canvasRef.current) {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
