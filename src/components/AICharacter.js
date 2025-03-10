@@ -11,7 +11,8 @@ const AICharacter = ({ isTyping, chatHistory, sendMessageToAI, players }) => {
     chat: "",
   });
 
-  const lastRepliedMessage = useRef(null);
+  const lastSeenMessages = useRef(new Set());
+  const hasNoticedPlayer = useRef(false);
 
   const checkProximity = (player) => {
     const distance = Math.sqrt(
@@ -19,21 +20,35 @@ const AICharacter = ({ isTyping, chatHistory, sendMessageToAI, players }) => {
     );
     return distance < 100;
   };
-
   useEffect(() => {
-    if (!aiPlayer.isMoving || isTyping) return;
+    const nearbyPlayers = Object.values(players || {}).filter(checkProximity);
+    if (nearbyPlayers.length > 0) {
+      setAiPlayer((prev) => ({ ...prev, isMoving: false }));
+      hasNoticedPlayer.current = true;
+    } else if (hasNoticedPlayer.current) {
+      setAiPlayer((prev) => ({ ...prev, isMoving: true }));
+      hasNoticedPlayer.current = false;
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [players]);
+  
+  useEffect(() => {
+    if (isTyping) return;
 
     const moveAI = () => {
-      setAiPlayer((prev) => ({
-        ...prev,
-        x: prev.x + (Math.random() * 20 - 10),
-        y: prev.y + (Math.random() * 20 - 10),
-      }));
+      setAiPlayer((prev) => {
+        if (!prev.isMoving) return prev; // Ensure AI only moves if allowed
+        return {
+          ...prev,
+          x: prev.x + (Math.random() * 20 - 10),
+          y: prev.y + (Math.random() * 20 - 10),
+        };
+      });
     };
 
     const aiInterval = setInterval(moveAI, 2000);
     return () => clearInterval(aiInterval);
-  }, [aiPlayer.isMoving, isTyping]);
+  }, [isTyping]);
 
   useEffect(() => {
     if (!chatHistory || chatHistory.length === 0) return;
@@ -41,14 +56,22 @@ const AICharacter = ({ isTyping, chatHistory, sendMessageToAI, players }) => {
     const nearbyPlayers = Object.values(players || {}).filter(checkProximity);
     
     if (
-      lastMessage.text.toLowerCase().includes("ai bot") && 
+      lastMessage.text && // Ensure the message is not empty
+      !lastMessage.name.includes("Azoni AI") && // Prevent AI from responding to itself
       nearbyPlayers.length > 0 && 
-      lastRepliedMessage.current !== lastMessage.text // Ensure AI only responds once
+      !lastSeenMessages.current.has(lastMessage.text) // Ensure AI only responds once per message in range
     ) {
-      lastRepliedMessage.current = lastMessage.text; // Store the last responded message
-      setAiPlayer((prev) => ({ ...prev, isMoving: false, chat: "Thinking..." }));
-      sendMessageToAI(lastMessage.text);
+      lastSeenMessages.current.add(lastMessage.text); // Store the seen message
+      setAiPlayer((prev) => ({ ...prev, chat: "Thinking..." }));
+      
+      sendMessageToAI(lastMessage.text, nearbyPlayers.map(p => p.name)).then(response => {
+        setAiPlayer((prev) => ({ ...prev, chat: response }));
+        setTimeout(() => {
+          setAiPlayer((prev) => ({ ...prev, chat: "" }));
+        }, 5000);
+      });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatHistory, sendMessageToAI, players]);
 
   return (
@@ -56,14 +79,37 @@ const AICharacter = ({ isTyping, chatHistory, sendMessageToAI, players }) => {
       <img
         src={aiPlayer.avatar}
         alt="AI Character"
-        className="ai-character"
-        style={{ left: aiPlayer.x, top: aiPlayer.y }}
+        style={{
+          position: "absolute",
+          left: aiPlayer.x,
+          top: aiPlayer.y,
+          width: "60px",
+          height: "60px",
+        }}
       />
-      <div className="ai-name" style={{ left: aiPlayer.x, top: aiPlayer.y - 20 }}>
-        {aiPlayer.name}
+      <div
+        style={{
+          position: "absolute",
+          left: aiPlayer.x,
+          top: aiPlayer.y - 20,
+          background: "white",
+          padding: "2px 5px",
+          borderRadius: "5px",
+        }}
+      >
+        {/* {aiPlayer.name} */}
       </div>
       {aiPlayer.chat && (
-        <div className="ai-chat-bubble" style={{ left: aiPlayer.x, top: aiPlayer.y - 40 }}>
+        <div
+          style={{
+            position: "absolute",
+            left: aiPlayer.x,
+            top: aiPlayer.y - 40,
+            background: "white",
+            padding: "5px",
+            borderRadius: "5px",
+          }}
+        >
           {aiPlayer.chat}
         </div>
       )}

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import CharacterSelection from "./CharacterSelection";
 import AICharacter from "./AICharacter";
+import Controls from "./Controls";
+
 import "../styles/GameCanvas.css";
 
 const GameCanvas = () => {
@@ -19,7 +21,7 @@ const GameCanvas = () => {
   useEffect(() => {
     if (!playerName || !playerAvatar) return;
 
-    const newWs = new WebSocket("wss://e111-73-97-95-199.ngrok-free.app/ws");
+    const newWs = new WebSocket("wss://5e27-73-97-95-199.ngrok-free.app/ws");
 
     newWs.onopen = () => {
       console.log("WebSocket Connected ✅");
@@ -130,7 +132,7 @@ const GameCanvas = () => {
           ctx.fillStyle = "black";
           ctx.font = "14px Arial";
           ctx.textAlign = "center";
-          ctx.fillText(name, x + 20, y + 50);
+          ctx.fillText(name, x + 20, y + 55);
 
           // ✅ Draw chat bubble if player has a message
           if (chat) {
@@ -184,7 +186,7 @@ const GameCanvas = () => {
       // const data = await response.json();
       // const aiResponse = data.choices[0]?.message?.content || "I have nothing to say.";
 
-      setChatHistory((prev) => [...prev, { name: "AI Bot", text: "You said" + message }]);
+      setChatHistory((prev) => [...prev, { name: "Azoni AI", text: "You said" + message }]);
     } catch (error) {
       console.error("Error getting AI response:", error);
     }
@@ -199,6 +201,7 @@ const GameCanvas = () => {
         }} />
       ) : (
         <>
+          <Controls />
           <canvas ref={canvasRef} className="game-canvas"></canvas>
           <AICharacter isTyping={isTyping} chatHistory={chatHistory} sendMessageToAI={sendMessageToAI} players={players} />
           <input
@@ -212,7 +215,7 @@ const GameCanvas = () => {
               position: "absolute",
               bottom: "10px",
               left: "10px",
-              width: "auto",
+              width: "50%",
               padding: "5px",
               fontSize: "14px",
             }}
