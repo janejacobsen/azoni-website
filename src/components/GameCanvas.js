@@ -2,22 +2,33 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import CharacterSelection from "./CharacterSelection";
 import AICharacter from "./AICharacter";
 import Controls from "./Controls";
+import Skills from "./Skills";
+import TreePlacement from "./TreePlacement";
 
 import "../styles/GameCanvas.css";
 
 const GameCanvas = () => {
   const canvasRef = useRef(null);
   const inputRef = useRef(null);
+  const chatRef = useRef(null);
 
   // eslint-disable-next-line no-unused-vars
   const [players, setPlayers] = useState({}); 
+  const [playerX, setPlayerX] = useState("");
+  const [playerY, setPlayerY] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [chatMessage, setChatMessage] = useState("");
   const [playerName, setPlayerName] = useState("");
   const [playerAvatar, setPlayerAvatar] = useState("");
   const [ws, setWs] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
+  const [woodcuttingXP, setWoodcuttingXP] = useState(0);
 
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, []); // Runs whenever chatHistory updates
   useEffect(() => {
     if (!playerName || !playerAvatar) return;
 
@@ -40,10 +51,18 @@ const GameCanvas = () => {
       newWs.close();
     };
   }, [playerName, playerAvatar]);
-
+  
+  const handleChopTree = (tree) => {
+    console.log(`Chopped ${tree.index}! Gained ${tree.chopTime * 10} XP.`);
+    setWoodcuttingXP(prevXP => prevXP + tree.chopTime * 10);
+    ws.send(JSON.stringify({ type: "chat", text: `Chopped ${tree.index}! Gained ${tree.chopTime * 10} XP.` }));
+    // Later, we will add XP, inventory updates, and tree respawn logic here.
+  };
+  
   const sendChat = useCallback(() => {
     if (ws && chatMessage.trim() !== "") {
       ws.send(JSON.stringify({ type: "chat", text: chatMessage }));
+      // Directly execute escape logic
       setChatMessage("");
       setIsTyping(false);
       inputRef.current?.blur();
@@ -60,6 +79,7 @@ const GameCanvas = () => {
     if (event.key === "Enter") {
       if (isTyping) {
         sendChat();
+        return;
       } else {
         setIsTyping(true);
         setTimeout(() => inputRef.current?.focus(), 0);
@@ -124,7 +144,8 @@ const GameCanvas = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       Object.keys(players).forEach((id) => {
         const { x, y, avatar, name, chat } = players[id];
-
+        setPlayerX(x)
+        setPlayerY(y)
         const img = new Image();
         img.src = avatar;
         img.onload = () => {
@@ -202,6 +223,8 @@ const GameCanvas = () => {
       ) : (
         <>
           <Controls />
+          <Skills woodcuttingXP={woodcuttingXP}/>
+          <TreePlacement playerX={playerX} playerY={playerY} onChopTree={handleChopTree} />
           <canvas ref={canvasRef} className="game-canvas"></canvas>
           <AICharacter isTyping={isTyping} chatHistory={chatHistory} sendMessageToAI={sendMessageToAI} players={players} />
           <input
@@ -222,6 +245,7 @@ const GameCanvas = () => {
           />
           
           <div
+            ref={chatRef}
             style={{
               position: "absolute",
               bottom: "50px",
@@ -235,7 +259,7 @@ const GameCanvas = () => {
               overflowY: "auto",
             }}
           >
-            {chatHistory.slice(-10).map((msg, index) => (
+            {chatHistory.slice(-30).map((msg, index) => (
               <div key={index}>
                 <strong>{msg.name}:</strong> {msg.text}
               </div>
