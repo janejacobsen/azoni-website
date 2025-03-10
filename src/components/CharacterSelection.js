@@ -3,7 +3,12 @@ import "../styles/CharacterSelection.css"; // ✅ Import new styles
 
 const defaultAvatars = [
   "/avatars/sack.png",
-  "/avatars/seal.png",
+  "/avatars/doodle.png",
+  "/avatars/bear.png",
+  "/avatars/catt.png",
+  "/avatars/ape.png",
+  "/avatars/pudgy.png",
+  "/avatars/toadz.png",
 ];
 
 const CharacterSelection = ({ onConfirm }) => {
@@ -17,15 +22,15 @@ const CharacterSelection = ({ onConfirm }) => {
   };
 
   const handleAvatarUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setUploadedAvatar(e.target.result);
-        setSelectedAvatar(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
+    // const file = event.target.files[0];
+    // if (file) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     setUploadedAvatar(e.target.result);
+    //     setSelectedAvatar(e.target.result);
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
   };
 
   const handleKeyPress = (event) => {

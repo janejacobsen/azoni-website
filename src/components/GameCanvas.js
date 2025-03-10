@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import CharacterSelection from "./CharacterSelection";
+import AICharacter from "./AICharacter";
+import "../styles/GameCanvas.css";
 
 const GameCanvas = () => {
   const canvasRef = useRef(null);
@@ -160,7 +162,7 @@ const GameCanvas = () => {
     drawGame();
   }, [players]); // ✅ Re-run when players change
   return (
-    <div style={{ position: "relative", width: "100%", height: "600px", border: "2px solid black" }}>
+    <div style={{ position: "relative", width: "100%", height: "700px", border: "2px solid black" }}>
       {!playerName || !playerAvatar ? (
         <CharacterSelection onConfirm={(name, avatar) => {
           setPlayerName(name);
@@ -168,8 +170,8 @@ const GameCanvas = () => {
         }} />
       ) : (
         <>
-          <canvas ref={canvasRef} className="game-canvas" width="1100" height="600"></canvas>
-          
+          <canvas ref={canvasRef} className="game-canvas"></canvas>
+          <AICharacter isTyping={isTyping} />
           <input
             ref={inputRef}
             type="text"
@@ -193,7 +195,7 @@ const GameCanvas = () => {
               bottom: "50px",
               left: "10px",
               width: "50%",
-              height: "100px",
+              height: "150px",
               background: "rgba(0, 0, 0, 0.5)",
               color: "white",
               padding: "5px",
