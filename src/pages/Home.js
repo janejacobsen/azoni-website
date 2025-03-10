@@ -12,7 +12,7 @@ const Home = () => {
       <Header />
       <main className="main">
         <section className="card">
-          <h2 className="game-title">Azoni Land</h2>
+          <h2 className="game-title">Home</h2>
           <GameCanvas />
         </section>
       </main>

@@ -165,6 +165,31 @@ const GameCanvas = () => {
 
     drawGame();
   }, [players]); // ✅ Re-run when players change
+
+  const sendMessageToAI = async (message) => {
+    try {
+      // const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer YOUR_OPENAI_API_KEY`,
+      //   },
+      //   body: JSON.stringify({
+      //     model: "gpt-4",
+      //     messages: [{ role: "system", content: "You are an NPC in a game. Keep responses immersive." },
+      //                { role: "user", content: message }],
+      //   }),
+      // });
+
+      // const data = await response.json();
+      // const aiResponse = data.choices[0]?.message?.content || "I have nothing to say.";
+
+      setChatHistory((prev) => [...prev, { name: "AI Bot", text: "You said" + message }]);
+    } catch (error) {
+      console.error("Error getting AI response:", error);
+    }
+  };
+
   return (
     <div style={{ position: "relative", width: "100%", height: "700px", border: "2px solid black" }}>
       {!playerName || !playerAvatar ? (
@@ -175,7 +200,7 @@ const GameCanvas = () => {
       ) : (
         <>
           <canvas ref={canvasRef} className="game-canvas"></canvas>
-          <AICharacter isTyping={isTyping} />
+          <AICharacter isTyping={isTyping} chatHistory={chatHistory} sendMessageToAI={sendMessageToAI} players={players} />
           <input
             ref={inputRef}
             type="text"
