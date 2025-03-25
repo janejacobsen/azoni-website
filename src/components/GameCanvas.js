@@ -5,6 +5,7 @@ import Controls from "./Controls";
 import Skills from "./Skills";
 import TreePlacement from "./TreePlacement";
 import Inventory from "./Inventory";
+import AIStatus from "./AIStatus";
 
 import "../styles/GameCanvas.css";
 
@@ -26,6 +27,24 @@ const GameCanvas = () => {
   const [woodcuttingXP, setWoodcuttingXP] = useState(0);
   const [inventory, setInventory] = useState({});
   const [isInventoryOpen, setIsInventoryOpen] = useState(false);
+  const [tradeRequest, setTradeRequest] = useState(null); // Track active trade requests
+  // eslint-disable-next-line no-unused-vars
+  const [activeTrade, setActiveTrade] = useState(null);
+  const [aiInventory, setAiInventory] = useState({});
+  const [aiWoodcuttingXP, setAiWoodcuttingXP] = useState(0);
+  const [trees, setTrees] = useState([]);
+
+  const acceptTrade = (trader) => {
+    console.log(`Accepted trade with ${trader}`);
+    setTradeRequest(null); // Remove the request popup
+    setActiveTrade({ with: trader, offered: {}, received: {} }); // Open trade UI
+  };
+  const handlePlayerClick = (playerId) => {
+    if (playerId !== playerName) {
+      setTradeRequest({ from: playerName, to: playerId });
+      console.log(`Trade request sent to ${playerId}`);
+    }
+  };
 
   useEffect(() => {
     const toggleInventory = (event) => {
@@ -38,11 +57,21 @@ const GameCanvas = () => {
     return () => window.removeEventListener("keydown", toggleInventory);
   }, []);
 
-  useEffect(() => {
+  // Function to scroll to bottom
+  const scrollToBottom = () => {
     if (chatRef.current) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+      setTimeout(() => {
+        chatRef.current.scrollTop = chatRef.current.scrollHeight;
+      }, 0);
+      
     }
-  }, []); // Runs whenever chatHistory updates
+  };
+  // useEffect(() => {
+  //   if (chatRef.current) {
+  //     chatRef.current.scrollTop = chatRef.current.scrollHeight;
+  //   }
+  // }, [chatMessage]); // Runs whenever chatHistory updates
+
   useEffect(() => {
     if (!playerName || !playerAvatar) return;
 
@@ -82,6 +111,7 @@ const GameCanvas = () => {
     if (ws && chatMessage.trim() !== "") {
       ws.send(JSON.stringify({ type: "chat", text: chatMessage }));
       // Directly execute escape logic
+      setTimeout(scrollToBottom, 10); // Ensures scrolling after the message renders
       setChatMessage("");
       setIsTyping(false);
       inputRef.current?.blur();
@@ -118,8 +148,20 @@ const GameCanvas = () => {
       const rect = canvasRef.current.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
+      
       ws.send(JSON.stringify({ type: "moveTo", x, y }));
+      
+      Object.keys(players).forEach((id) => {
+        const player = players[id];
+        const distance = Math.sqrt((x - player.x) ** 2 + (y - player.y) ** 2);
+        console.log(distance, x, y)
+        if (distance < 30) {
+          handlePlayerClick(player.name); // Send trade request if player is clicked
+        }
+      });
     };
+
+
 
     const move = (dx, dy) => {
       if (!isTyping && ws) ws.send(JSON.stringify({ type: "move", dx, dy }));
@@ -146,6 +188,7 @@ const GameCanvas = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       canvasRef.current?.removeEventListener("click", handleCanvasClick);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleKeyPress, isTyping, ws]);
 
   // ✅ Ensure canvas re-renders when players update
@@ -207,29 +250,66 @@ const GameCanvas = () => {
 
     drawGame();
   }, [players]); // ✅ Re-run when players change
+  const startAIWoodcutting = () => {
+    if (trees.length === 0) {
+      setChatHistory((prev) => [...prev, { name: "Azoni AI", text: "I don't see any trees!" }]);
+      return;
+    }
+    setChatHistory((prev) => [...prev, { name: "Azoni AI", text: "I don't see any trees!" }]);
+    console.log(trees)
+    const aiPlayer = players["Azoni AI"];
+    if (!aiPlayer) return;
+  
+    // Find the closest tree
+    const nearestTree = trees.reduce((closest, tree) => {
+      const aiDistance = Math.sqrt((aiPlayer.x - tree.x) ** 2 + (aiPlayer.y - tree.y) ** 2);
+      const closestDistance = Math.sqrt((aiPlayer.x - closest.x) ** 2 + (aiPlayer.y - closest.y) ** 2);
+      return aiDistance < closestDistance ? tree : closest;
+    }, trees[0]);
+  
+    // Move AI to the tree (simulate movement over time)
+    const moveInterval = setInterval(() => {
+      const dx = nearestTree.x - aiPlayer.x;
+      const dy = nearestTree.y - aiPlayer.y;
+      if (Math.abs(dx) < 5 && Math.abs(dy) < 5) {
+        clearInterval(moveInterval);
+        chopTreeAI(nearestTree);
+      } else {
+        aiPlayer.x += dx * 0.1;
+        aiPlayer.y += dy * 0.1;
+        setPlayers({ ...players, "Azoni AI": aiPlayer });
+      }
+    }, 100);
+  };
+  const chopTreeAI = (tree) => {
+    setChatHistory((prev) => [...prev, { name: "Azoni AI", text: "I'm chopping the tree!" }]);
+
+    setTimeout(() => {
+      setChatHistory((prev) => [...prev, { name: "Azoni AI", text: "I got some logs!" }]);
+
+      // Award XP
+      setAiWoodcuttingXP((prevXP) => prevXP + tree.chopTime * 10);
+
+      // Add logs to AI's inventory
+      setAiInventory((prev) => ({
+        ...prev,
+        [tree.image]: (prev[tree.image] || 0) + Math.floor(Math.random() * 3) + 1, // Random 1-3 logs
+      }));
+
+      // Remove the tree and respawn it
+      setTrees((prevTrees) => prevTrees.filter((t) => t !== tree));
+      setTimeout(() => setTrees([...trees, tree]), 30000);
+    }, tree.chopTime * 1000);
+  };
 
   const sendMessageToAI = async (message) => {
-    try {
-      // const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer YOUR_OPENAI_API_KEY`,
-      //   },
-      //   body: JSON.stringify({
-      //     model: "gpt-4",
-      //     messages: [{ role: "system", content: "You are an NPC in a game. Keep responses immersive." },
-      //                { role: "user", content: message }],
-      //   }),
-      // });
-
-      // const data = await response.json();
-      // const aiResponse = data.choices[0]?.message?.content || "I have nothing to say.";
-
-      setChatHistory((prev) => [...prev, { name: "Azoni AI", text: "You said" + message }]);
-    } catch (error) {
-      console.error("Error getting AI response:", error);
+    setChatHistory((prev) => [...prev, { name: "You", text: message }]);
+    if (message.toLowerCase().includes("cut wood") || message.toLowerCase().includes("chop trees")) {
+      startAIWoodcutting();
+      return;
     }
+  
+    setChatHistory((prev) => [...prev, { name: "Azoni AI", text: "I don't understand." }]);
   };
 
   return (
@@ -243,6 +323,40 @@ const GameCanvas = () => {
         <>
           <Controls />
           <Inventory inventory={inventory} isOpen={isInventoryOpen} onClose={() => setIsInventoryOpen(false)} />
+          {tradeRequest && tradeRequest.to === playerName && (
+            <div style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              background: "rgba(0, 0, 0, 0.8)",
+              color: "white",
+              padding: "20px",
+              borderRadius: "10px"
+            }}>
+              <p>{tradeRequest.from} wants to trade with you!</p>
+              <button onClick={() => acceptTrade(tradeRequest.from)}>Accept</button>
+              <button onClick={() => setTradeRequest(null)}>Decline</button>
+            </div>
+          )}
+          {activeTrade && (
+            <div style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              background: "rgba(0, 0, 0, 0.9)",
+              color: "white",
+              padding: "20px",
+              borderRadius: "10px",
+              width: "300px"
+            }}>
+              <h3>Trading with {activeTrade.with}</h3>
+              <p>Your Offer: {JSON.stringify(activeTrade.offered)}</p>
+              <p>Their Offer: {JSON.stringify(activeTrade.received)}</p>
+              <button onClick={() => setActiveTrade(null)}>Cancel Trade</button>
+            </div>
+          )}
           <button
             onClick={() => setIsInventoryOpen((prev) => !prev)}
             style={{
@@ -257,8 +371,9 @@ const GameCanvas = () => {
               cursor: "pointer"
             }}
           ></button>
+          <AIStatus aiInventory={aiInventory} aiWoodcuttingXP={aiWoodcuttingXP} />
           <Skills woodcuttingXP={woodcuttingXP}/>
-          <TreePlacement playerX={playerX} playerY={playerY} onChopTree={handleChopTree} />
+          <TreePlacement trees={trees} setTrees={setTrees} playerX={playerX} playerY={playerY} onChopTree={handleChopTree} />
           <canvas ref={canvasRef} className="game-canvas"></canvas>
           <AICharacter isTyping={isTyping} chatHistory={chatHistory} sendMessageToAI={sendMessageToAI} players={players} />
           <input
@@ -278,8 +393,8 @@ const GameCanvas = () => {
             }}
           />
           
-          <div
-            ref={chatRef}
+          <div 
+            ref={chatRef} 
             style={{
               position: "absolute",
               bottom: "50px",

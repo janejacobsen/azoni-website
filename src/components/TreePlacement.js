@@ -84,32 +84,33 @@ const Tree = ({ x, y, image, size, chopTime, playerX, playerY, onChop }) => {
   );
 };
 
-const TreePlacement = ({ playerX, playerY, onChopTree }) => {
-  const [trees, setTrees] = useState([]);
+const TreePlacement = ({ trees, setTrees, playerX, playerY, onChopTree }) => {
 
   useEffect(() => {
-    const staticTrees = [
-      { x: 1280, y: 520 },
-      { x: 1240, y: 500 },
-      { x: 1200, y: 560 },
-      { x: 1160, y: 480 },
-    ].map(tree => {
-      const treeType = treeData[Math.floor(Math.random() * treeData.length)];
-      return { ...tree, image: treeType.image, size: treeType.size, chopTime: treeType.chopTime };
-    });
+    if (trees.length === 0) {
+      const staticTrees = [
+        { x: 1280, y: 520 },
+        { x: 1240, y: 500 },
+        { x: 1200, y: 560 },
+        { x: 1160, y: 480 },
+      ].map(tree => {
+        const treeType = treeData[Math.floor(Math.random() * treeData.length)];
+        return { ...tree, image: treeType.image, size: treeType.size, chopTime: treeType.chopTime };
+      });
 
-    const randomTrees = Array.from({ length: 5 }).map(() => {
-      const treeType = treeData[Math.floor(Math.random() * treeData.length)];
-      return {
-        x: Math.random() * (1400 - 50) + 50, // Random X between 50 and 1400
-        y: Math.random() * (700 - 50) + 50,  // Random Y between 50 and 700
-        image: treeType.image,
-        size: treeType.size,
-        chopTime: treeType.chopTime,
-      };
-    });
+      const randomTrees = Array.from({ length: 5 }).map(() => {
+        const treeType = treeData[Math.floor(Math.random() * treeData.length)];
+        return {
+          x: Math.random() * (1400 - 50) + 50, // Random X between 50 and 1400
+          y: Math.random() * (700 - 50) + 50,  // Random Y between 50 and 700
+          image: treeType.image,
+          size: treeType.size,
+          chopTime: treeType.chopTime,
+        };
+      });
 
-    setTrees([...staticTrees, ...randomTrees]);
+      setTrees([...staticTrees, ...randomTrees]);
+    }
   }, []);
 
   const handleChop = (index) => {
