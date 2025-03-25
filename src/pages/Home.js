@@ -12,7 +12,7 @@ const Home = () => {
       <Header />
       <main className="main">
         <section className="card">
-          <h2 className="game-title">Home - Inder Construction</h2>
+          <h2 className="game-title">Home - Under Construction</h2>
           <GameCanvas />
         </section>
       </main>
