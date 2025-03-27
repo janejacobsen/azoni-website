@@ -111,7 +111,7 @@ const TreePlacement = ({ trees, setTrees, playerX, playerY, onChopTree }) => {
 
       setTrees([...staticTrees, ...randomTrees]);
     }
-  }, []);
+  }, [setTrees, trees.length]);
 
   const handleChop = (index) => {
     const choppedTree = trees[index];
