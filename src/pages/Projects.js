@@ -7,13 +7,13 @@ const projects = [
   {
     title: "Azoni AI",
     description: "Customize AI agents with unique personalities.",
-    image: "https://via.placeholder.com/300",
+    image: "/projects/nwn.png",
     github: "https://github.com/azoni/azoni-package",
   },
   {
     title: "A Dawn of Heroes",
     description: "Game development project.",
-    image: "./public/logo512.png",
+    image: "/projects/nwn.png",
     github: "https://github.com/azoni/adoh-dps",
   },
 ];

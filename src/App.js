@@ -1,17 +1,19 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import WhoIAm from "./pages/WhoIAm";
 import Projects from "./pages/Projects";
 import Documentation from "./pages/Documentation";
+import AboutMe from "./pages/AboutMe";
+import ChatWithGPT from "./pages/ChatWithGPT";
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/who-i-am" element={<WhoIAm />} />
+        <Route path="/aboutme" element={<AboutMe />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/chat" element={<ChatWithGPT />} />
         <Route path="/documentation" element={<Documentation />} />
       </Routes>
     </Router>

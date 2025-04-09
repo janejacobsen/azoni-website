@@ -75,7 +75,7 @@ const GameCanvas = () => {
   useEffect(() => {
     if (!playerName || !playerAvatar) return;
 
-    const newWs = new WebSocket("wss://5e27-73-97-95-199.ngrok-free.app/ws");
+    const newWs = new WebSocket("wss://ebb2-73-97-95-199.ngrok-free.app/ws");
 
     newWs.onopen = () => {
       console.log("WebSocket Connected ✅");

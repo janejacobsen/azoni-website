@@ -11,8 +11,9 @@ const Header = () => {
 
       {/* Navigation Links */}
       <nav className="nav">
-        <Link to="/who-i-am" className="styled-link">About Me</Link>
+        <Link to="/aboutme" className="styled-link">About Me</Link>
         <Link to="/projects" className="styled-link">Projects</Link>
+        <Link to="/chat" className="styled-link">Chat</Link>
       </nav>
 
       {/* Social Links */}
