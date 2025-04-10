@@ -61,7 +61,7 @@ const ChatWithGPT = () => {
               key={i}
               className={`message ${msg.role === "user" ? "user" : "assistant"}`}
             >
-              <strong>{msg.role === "user" ? "You" : "GPT"}:</strong> {msg.content}
+              <strong>{msg.role === "user" ? "You" : "Azoni"}:</strong> {msg.content}
             </div>
           ))}
           {loading && <p className="italic text-neutral-400">Azoni is typing...</p>}
