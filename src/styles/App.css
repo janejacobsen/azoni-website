@@ -32,3 +32,55 @@ a {
 a:hover {
   color: var(--button-hover);
 }
+.home-container {
+  padding: 4rem 2rem;
+  max-width: 960px;
+  margin: auto;
+  text-align: center;
+}
+
+.home-intro {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+.card-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.home-card {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  border-radius: 1rem;
+  text-decoration: none;
+  background-color: #f9f9f9;
+  border: 1px solid #eaeaea;
+  transition: box-shadow 0.2s ease;
+}
+
+.home-card:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.home-card h2 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: #111;
+}
+
+.home-card p {
+  flex-grow: 1;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.card-link {
+  font-weight: bold;
+  color: #0070f3;
+  text-align: right;
+}
