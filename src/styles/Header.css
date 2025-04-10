@@ -1,13 +1,13 @@
-/* Base styles */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  padding: 10px 20px;
-  background-color: #2c3e50;
-  border-radius: 10px;
+  padding: 15px 20px;
+  background: var(--secondary-color);
+  color: white;
+  border-radius: var(--border-radius);
 }
+
 /* left-side nav */
 .navbar {
   display: flex;
@@ -34,6 +34,7 @@
 /* right-side socials */
 .header .social-links {
   display: flex;
+  padding: 8px 14px;
   gap: 10px;
 }
 /* optional: responsive behavior */
@@ -46,5 +47,6 @@
   .navbar,
   .header .social-links {
     justify-content: center;
+    padding: 8px 14px;
   }
 }
