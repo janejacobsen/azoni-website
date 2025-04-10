@@ -1,34 +1,50 @@
+/* Base styles */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background: var(--secondary-color);
-  color: white;
-  border-radius: var(--border-radius);
+  flex-wrap: wrap;
+  padding: 10px 20px;
+  background-color: #2c3e50;
+  border-radius: 10px;
+}
+/* left-side nav */
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.home-button {
-  background: var(--primary-color);
+.navbar a,
+.navbar button {
   color: white;
-  padding: 8px 12px;
-  font-weight: bold;
-  border-radius: var(--border-radius);
   text-decoration: none;
-  transition: background 0.3s ease-in-out;
-}
-
-.home-button:hover {
-  background: var(--button-hover);
-}
-
-.nav a {
-  margin: 0 15px;
+  background-color: #3498db;
+  padding: 8px 14px;
+  border-radius: 6px;
   font-weight: bold;
-  color: white;
-  transition: color 0.3s ease-in-out;
+  white-space: nowrap;
+  transition: background-color 0.2s;
 }
 
-.nav a:hover {
-  color: var(--primary-color);
+.navbar a:hover,
+.navbar button:hover {
+  background-color: #2980b9;
+}
+/* right-side socials */
+.header .social-links {
+  display: flex;
+  gap: 10px;
+}
+/* optional: responsive behavior */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar,
+  .header .social-links {
+    justify-content: center;
+  }
 }

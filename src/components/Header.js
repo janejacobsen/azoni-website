@@ -6,20 +6,21 @@ import "../styles/Header.css"; // Ensure the CSS file is imported
 const Header = () => {
   return (
     <header className="header">
+      <nav className="navbar">
       {/* Home Button */}
       <Link to="/" className="home-button">Home</Link>
 
       {/* Navigation Links */}
-      <nav className="nav">
+      
         <Link to="/aboutme" className="styled-link">About Me</Link>
         <Link to="/projects" className="styled-link">Projects</Link>
         <Link to="/chat" className="styled-link">Chat</Link>
-      </nav>
+        <Link to="/resume" className="styled-link">Resume</Link> {/* 👈 Add this */}
 
       {/* Social Links */}
+      
+      </nav>
       <SocialLinks />
-
-      <p className="subtitle">Unleash the Power of Personalized AI</p>
     </header>
   );
 };

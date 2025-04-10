@@ -5,6 +5,7 @@ import Projects from "./pages/Projects";
 import Documentation from "./pages/Documentation";
 import AboutMe from "./pages/AboutMe";
 import ChatWithGPT from "./pages/ChatWithGPT";
+import ResumeViewer from "./components/ResumeViewer";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/aboutme" element={<AboutMe />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/chat" element={<ChatWithGPT />} />
+        <Route path="/resume" element={<ResumeViewer />} />
         <Route path="/documentation" element={<Documentation />} />
       </Routes>
     </Router>
