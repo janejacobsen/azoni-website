@@ -1,28 +1,50 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import SocialLinks from "./SocialLinks";
 import "../styles/Header.css"; // Ensure the CSS file is imported
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="header">
+    <header className="site-header">
       <nav className="navbar">
-      {/* Home Button */}
-      <Link to="/" className="home-button">Home</Link>
-
-      {/* Navigation Links */}
-      
-        <Link to="/aboutme" className="styled-link">About Me</Link>
-        <Link to="/projects" className="styled-link">Projects</Link>
-        <Link to="/chat" className="styled-link">Chat</Link>
-        <Link to="/resume" className="styled-link">Resume</Link> {/* 👈 Add this */}
-
-      {/* Social Links */}
-      
+        <div className="nav-left">
+        <NavLink
+          to="/"
+          className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+        >
+          Home
+        </NavLink>
+        <NavLink
+          to="/aboutme"
+          className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+        >
+          About
+        </NavLink>
+        <NavLink
+          to="/projects"
+          className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+        >
+          Projects
+        </NavLink>
+        <NavLink
+          to="/chat"
+          className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+        >
+          Chat
+        </NavLink>
+        <NavLink
+          to="/resume"
+          className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+        >
+          Resume
+        </NavLink>
+        </div>
+        <div className="nav-right">
+          <SocialLinks />
+        </div>
       </nav>
-      <SocialLinks />
     </header>
   );
-};
+}
 
 export default Header;

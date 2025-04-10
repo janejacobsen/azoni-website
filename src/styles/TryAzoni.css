@@ -22,7 +22,7 @@
 
 .btn {
   background: var(--button-bg);
-  color: white;
+  color: rgb(18, 75, 233);
   padding: 10px 15px;
   border: none;
   border-radius: var(--border-radius);
@@ -35,8 +35,9 @@
 }
 
 .output-card {
+  width: 300px;
   margin-top: 20px;
   padding: 15px;
-  background: #ecf0f1;
+  background: #0faed6;
   border-radius: var(--border-radius);
 }

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+// import React, { useState } from "react";
+// import { motion } from "framer-motion";
 import "../styles/TryAzoni.css";
 
 const TryAzoni = () => {
-  const [input, setInput] = useState("");
-  const [output, setOutput] = useState("Output will appear here...");
+  // const [input, setInput] = useState("");
+  // const [output, setOutput] = useState("Output will appear here...");
 
-  const handleGenerate = () => {
-    setOutput(`Generated personality: ${input}`);
-  };
+  // const handleGenerate = () => {
+  //   setOutput(`Generated personality: ${input}`);
+  // };
 
   return (
     <section className="try-section">
@@ -16,7 +16,7 @@ const TryAzoni = () => {
         <section className="card">
           <div className="code-block">pip install azoni (Coming soon...)</div>
         </section>
-      <p className="try-text">Input a personality and experience Azoni AI in action.</p>
+      {/* <p className="try-text">Input a personality and experience Azoni AI in action.</p>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -36,7 +36,7 @@ const TryAzoni = () => {
         <div className="output-card">
           <p className="output-text">{output}</p>
         </div>
-      </motion.div>
+      </motion.div> */}
     </section>
   );
 };

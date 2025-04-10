@@ -1,5 +1,5 @@
 .chat-container {
-  max-width: 80%;
+  width: 100%;
   margin: 0 auto;
   padding: 3rem 1.5rem;
   font-family: 'Inter', sans-serif;
@@ -10,7 +10,7 @@
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
 }
 
 .chat-box {

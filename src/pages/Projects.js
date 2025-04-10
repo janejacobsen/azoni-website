@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ProjectCard from "../components/ProjectCard";
+import "../styles/ProjectCard.css";
 
 const projects = [
   {
@@ -23,9 +24,14 @@ const Projects = () => {
     <div className="container">
       <Header />
       <main className="main">
-        {projects.map((project, index) => (
-          <ProjectCard key={index} {...project} />
-        ))}
+        <h2 className="page-title">💻 My Projects</h2>
+        <p className="page-subtitle">A collection of tools, games, and AI experiments I've built.</p>
+
+        <div className="project-grid">
+          {projects.map((project, index) => (
+            <ProjectCard key={index} {...project} />
+          ))}
+        </div>
       </main>
       <Footer />
     </div>

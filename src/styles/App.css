@@ -1,86 +1,93 @@
-:root {
-  --primary-color: #3498db;
-  --secondary-color: #2c3e50;
-  --background-color: #f4f4f4;
-  --text-color: #333;
-  --card-bg: #ffffff;
-  --button-bg: #3498db;
-  --button-hover: #2980b9;
-  --border-radius: 8px;
-}
-
-body {
-  font-family: 'Poppins', sans-serif;
+/* Remove default spacing from body and html */
+html, body {
   margin: 0;
   padding: 0;
-  background: var(--background-color);
-  color: var(--text-color);
+  box-sizing: border-box;
+  background-color: #0d1117; /* Match your dark theme */
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Remove the white border that’s likely from browser default */
+* {
+  box-sizing: border-box;
+  border: none;
+}
+
+/* Optional: make sure the root element stretches */
+#root {
+  min-height: 100vh;
 }
 
 .container {
-  max-width: 1400px;
-  margin: auto;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #0d1117, #1f2937);
+  font-family: 'Outfit', sans-serif;
+  padding: 60px;
 }
 
-a {
-  text-decoration: none;
-  color: var(--primary-color);
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: var(--button-hover);
-}
-.home-container {
-  padding: 4rem 2rem;
-  max-width: 960px;
-  margin: auto;
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 100px;
   text-align: center;
 }
 
+.game-title {
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
 .home-intro {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  color: #555;
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: #cbd5e1;
+  margin-bottom: 2.5rem;
 }
 
 .card-grid {
   display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-bottom: 3rem;
 }
 
 .home-card {
-  display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  border-radius: 1rem;
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 24px;
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   text-decoration: none;
-  background-color: #f9f9f9;
-  border: 1px solid #eaeaea;
-  transition: box-shadow 0.2s ease;
+  color: white;
+  border: 1px solid #334155;
 }
 
 .home-card:hover {
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  border-color: #3b82f6;
 }
 
 .home-card h2 {
-  margin-top: 0;
+  font-size: 1.4rem;
   margin-bottom: 0.5rem;
-  font-size: 1.5rem;
-  color: #111;
+  color: #ffffff;
 }
 
 .home-card p {
-  flex-grow: 1;
-  color: #444;
+  font-size: 1rem;
+  color: #cbd5e1;
   margin-bottom: 1rem;
 }
 
 .card-link {
-  font-weight: bold;
-  color: #0070f3;
-  text-align: right;
+  font-size: 0.9rem;
+  color: #3b82f6;
+  font-weight: 500;
 }

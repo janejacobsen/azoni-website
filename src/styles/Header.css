@@ -1,52 +1,59 @@
-.header {
+.site-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #0d1117;
+  border-bottom: 1px solid #1e293b;
+  z-index: 1000;
+}
+
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background: var(--secondary-color);
-  color: white;
-  border-radius: var(--border-radius);
+  max-width: 1200px;
+  padding: 16px 24px;
+  margin: 0 auto;
+  font-family: 'Outfit', sans-serif;
 }
 
-/* left-side nav */
-.navbar {
+.nav-left,
+.nav-right {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  align-items: center;
+  gap: 18px;
 }
-
-.navbar a,
-.navbar button {
-  color: white;
+.nav-link.active {
+  color: #3b82f6;
+  font-weight: 700;
+}
+.nav-logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #3b82f6;
   text-decoration: none;
-  background-color: #3498db;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-weight: bold;
-  white-space: nowrap;
-  transition: background-color 0.2s;
 }
 
-.navbar a:hover,
-.navbar button:hover {
-  background-color: #2980b9;
+.nav-link {
+  text-decoration: none;
+  color: #cbd5e1;
+  font-weight: 500;
+  transition: color 0.2s;
 }
-/* right-side socials */
-.header .social-links {
-  display: flex;
-  padding: 8px 14px;
-  gap: 10px;
+
+.nav-link:hover {
+  color: #ffffff;
 }
-/* optional: responsive behavior */
-@media (max-width: 600px) {
-  .header {
+
+@media (max-width: 768px) {
+  .navbar {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
-  .navbar,
-  .header .social-links {
-    justify-content: center;
-    padding: 8px 14px;
+  .nav-left,
+  .nav-right {
+    flex-wrap: wrap;
+    gap: 12px;
   }
 }
