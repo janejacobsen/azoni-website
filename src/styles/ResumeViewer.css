@@ -1,5 +1,7 @@
+/* src/styles/ResumeViewer.css */
+
 .resume-container {
-  max-width: 800px;
+  /* max-width: 800px; */
   margin: 2rem auto;
   padding: 1rem;
   text-align: center;
@@ -7,7 +9,7 @@
 
 .resume-frame {
   margin: 1rem 0;
-  border: 1px solid #ccc;
+  border: 1px solid #334155;
   border-radius: 6px;
   overflow: hidden;
 }
@@ -16,14 +18,14 @@
   display: inline-block;
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: #3498db;
+  background-color: #3b82f6;
   color: white;
   border-radius: 6px;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
   transition: background-color 0.2s ease;
 }
 
 .download-button:hover {
-  background-color: #2980b9;
+  background-color: #2563eb;
 }

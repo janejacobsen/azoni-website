@@ -1,0 +1,30 @@
+/* src/index.css */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #0d1117;
+  color: white;
+  font-family: 'Outfit', sans-serif;
+  scroll-behavior: smooth;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+.container {
+  padding: 20px;
+}
+
+.main {
+  padding-top: 80px; /* to account for sticky header */
+  max-width: 1200px;
+  margin: 0 auto;
+}

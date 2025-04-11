@@ -6,6 +6,8 @@ import Skills from "./Skills";
 import TreePlacement from "./TreePlacement";
 import Inventory from "./Inventory";
 import AIStatus from "./AIStatus";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 import "../styles/GameCanvas.css";
 
@@ -313,109 +315,113 @@ const GameCanvas = () => {
   };
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "700px", border: "2px solid black" }}>
-      {!playerName || !playerAvatar ? (
-        <CharacterSelection onConfirm={(name, avatar) => {
-          setPlayerName(name);
-          setPlayerAvatar(avatar);
-        }} />
-      ) : (
-        <>
-          <Controls />
-          <Inventory inventory={inventory} isOpen={isInventoryOpen} onClose={() => setIsInventoryOpen(false)} />
-          {tradeRequest && tradeRequest.to === playerName && (
-            <div style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              background: "rgba(0, 0, 0, 0.8)",
-              color: "white",
-              padding: "20px",
-              borderRadius: "10px"
-            }}>
-              <p>{tradeRequest.from} wants to trade with you!</p>
-              <button onClick={() => acceptTrade(tradeRequest.from)}>Accept</button>
-              <button onClick={() => setTradeRequest(null)}>Decline</button>
-            </div>
-          )}
-          {activeTrade && (
-            <div style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              background: "rgba(0, 0, 0, 0.9)",
-              color: "white",
-              padding: "20px",
-              borderRadius: "10px",
-              width: "300px"
-            }}>
-              <h3>Trading with {activeTrade.with}</h3>
-              <p>Your Offer: {JSON.stringify(activeTrade.offered)}</p>
-              <p>Their Offer: {JSON.stringify(activeTrade.received)}</p>
-              <button onClick={() => setActiveTrade(null)}>Cancel Trade</button>
-            </div>
-          )}
-          <button
-            onClick={() => setIsInventoryOpen((prev) => !prev)}
-            style={{
-              position: "absolute",
-              bottom: "20px",
-              right: "20px",
-              width: "50px",
-              height: "50px",
-              background: "url('/icons/inventory.png') no-repeat center",
-              backgroundSize: "contain",
-              border: "none",
-              cursor: "pointer"
-            }}
-          ></button>
-          <AIStatus aiInventory={aiInventory} aiWoodcuttingXP={aiWoodcuttingXP} />
-          <Skills woodcuttingXP={woodcuttingXP}/>
-          <TreePlacement trees={trees} setTrees={setTrees} playerX={playerX} playerY={playerY} onChopTree={handleChopTree} />
-          <canvas ref={canvasRef} className="game-canvas"></canvas>
-          <AICharacter isTyping={isTyping} chatHistory={chatHistory} sendMessageToAI={sendMessageToAI} players={players} />
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="Type a message..."
-            value={chatMessage}
-            onChange={(e) => setChatMessage(e.target.value)}
-            onKeyDown={handleKeyPress}
-            style={{
-              position: "absolute",
-              bottom: "10px",
-              left: "10px",
-              width: "50%",
-              padding: "5px",
-              fontSize: "14px",
-            }}
-          />
-          
-          <div 
-            ref={chatRef} 
-            style={{
-              position: "absolute",
-              bottom: "50px",
-              left: "10px",
-              width: "50%",
-              height: "150px",
-              background: "rgba(0, 0, 0, 0.5)",
-              color: "white",
-              padding: "5px",
-              fontSize: "12px",
-              overflowY: "auto",
-            }}
-          >
-            {chatHistory.slice(-100).map((msg, index) => (
-              <div key={index}>
-                <strong>{msg.name}:</strong> {msg.text}
+    <div className="container">
+      <Header />
+      <div style={{ position: "relative", width: "100%", height: "700px", border: "2px solid black", marginTop: "80px" }}>
+        {!playerName || !playerAvatar ? (
+          <CharacterSelection onConfirm={(name, avatar) => {
+            setPlayerName(name);
+            setPlayerAvatar(avatar);
+          }} />
+        ) : (
+          <>
+            <Controls />
+            <Inventory inventory={inventory} isOpen={isInventoryOpen} onClose={() => setIsInventoryOpen(false)} />
+            {tradeRequest && tradeRequest.to === playerName && (
+              <div style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                background: "rgba(0, 0, 0, 0.8)",
+                color: "white",
+                padding: "20px",
+                borderRadius: "10px"
+              }}>
+                <p>{tradeRequest.from} wants to trade with you!</p>
+                <button onClick={() => acceptTrade(tradeRequest.from)}>Accept</button>
+                <button onClick={() => setTradeRequest(null)}>Decline</button>
               </div>
-            ))}
-          </div>
-        </>
-      )}
+            )}
+            {activeTrade && (
+              <div style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                background: "rgba(0, 0, 0, 0.9)",
+                color: "white",
+                padding: "20px",
+                borderRadius: "10px",
+                width: "300px"
+              }}>
+                <h3>Trading with {activeTrade.with}</h3>
+                <p>Your Offer: {JSON.stringify(activeTrade.offered)}</p>
+                <p>Their Offer: {JSON.stringify(activeTrade.received)}</p>
+                <button onClick={() => setActiveTrade(null)}>Cancel Trade</button>
+              </div>
+            )}
+            <button
+              onClick={() => setIsInventoryOpen((prev) => !prev)}
+              style={{
+                position: "absolute",
+                bottom: "20px",
+                right: "20px",
+                width: "50px",
+                height: "50px",
+                background: "url('/icons/inventory.png') no-repeat center",
+                backgroundSize: "contain",
+                border: "none",
+                cursor: "pointer"
+              }}
+            ></button>
+            <AIStatus aiInventory={aiInventory} aiWoodcuttingXP={aiWoodcuttingXP} />
+            <Skills woodcuttingXP={woodcuttingXP}/>
+            <TreePlacement trees={trees} setTrees={setTrees} playerX={playerX} playerY={playerY} onChopTree={handleChopTree} />
+            <canvas ref={canvasRef} className="game-canvas"></canvas>
+            <AICharacter isTyping={isTyping} chatHistory={chatHistory} sendMessageToAI={sendMessageToAI} players={players} />
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="Type a message..."
+              value={chatMessage}
+              onChange={(e) => setChatMessage(e.target.value)}
+              onKeyDown={handleKeyPress}
+              style={{
+                position: "absolute",
+                bottom: "10px",
+                left: "10px",
+                width: "50%",
+                padding: "5px",
+                fontSize: "14px",
+              }}
+            />
+            
+            <div 
+              ref={chatRef} 
+              style={{
+                position: "absolute",
+                bottom: "50px",
+                left: "10px",
+                width: "50%",
+                height: "150px",
+                background: "rgba(0, 0, 0, 0.5)",
+                color: "white",
+                padding: "5px",
+                fontSize: "12px",
+                overflowY: "auto",
+              }}
+            >
+              {chatHistory.slice(-100).map((msg, index) => (
+                <div key={index}>
+                  <strong>{msg.name}:</strong> {msg.text}
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+      <Footer />
     </div>
   );
 };

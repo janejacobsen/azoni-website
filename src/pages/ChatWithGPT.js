@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -9,6 +9,11 @@ const ChatWithGPT = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const chatEndRef = useRef(null);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,12 +64,25 @@ const ChatWithGPT = () => {
           {messages.map((msg, i) => (
             <div
               key={i}
-              className={`message ${msg.role === "user" ? "user" : "assistant"}`}
+              className={`chat-bubble ${msg.role === "user" ? "user" : "assistant"} fade-in`}
             >
-              <strong>{msg.role === "user" ? "You" : "Azoni"}:</strong> {msg.content}
+              <div className="chat-meta">
+                <span className="chat-name">
+                  {msg.role === "user" ? "You " : "Azoni "}
+                </span>
+                <span className="chat-time">
+                  {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              </div>
+              <div className="chat-content">{msg.content}</div>
             </div>
           ))}
-          {loading && <p className="italic text-neutral-400">Azoni is typing...</p>}
+          {loading && (
+            <div className="chat-bubble assistant fade-in">
+              <em>Azoni is typing...</em>
+            </div>
+          )}
+          <div ref={chatEndRef} />
         </div>
 
         <form onSubmit={handleSubmit} className="chat-form">
@@ -75,7 +93,9 @@ const ChatWithGPT = () => {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message here..."
           />
-          <button type="submit" className="chat-button">Send</button>
+          <button type="submit" className="chat-button">
+            Send
+          </button>
         </form>
       </div>
       <Footer />

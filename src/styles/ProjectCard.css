@@ -1,3 +1,5 @@
+/* src/styles/Projects.css */
+
 .page-title {
   font-size: 2.2rem;
   margin-bottom: 0.5rem;
@@ -13,8 +15,9 @@
 
 .project-grid {
   display: grid;
-  gap: 24px;
-  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+  gap: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  justify-content: center;
   padding-bottom: 3rem;
 }
 
@@ -36,12 +39,12 @@
 
 .project-image {
   width: 100%;
-  height: 180px;
+  height: 240px;
   object-fit: cover;
 }
 
 .project-content {
-  padding: 16px 20px;
+  padding: 24px;
 }
 
 .project-content h3 {

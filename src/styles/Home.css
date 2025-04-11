@@ -1,0 +1,51 @@
+/* src/styles/Home.css */
+
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.hero-title {
+  font-size: 2.75rem;
+  font-weight: 700;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: #cbd5e1;
+  margin-top: 10px;
+}
+
+.card-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: 40px;
+}
+
+.home-card {
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 24px;
+  transition: 0.2s ease;
+  border: 1px solid #334155;
+  text-decoration: none;
+  color: white;
+}
+
+.home-card:hover {
+  transform: translateY(-4px);
+  border-color: #3b82f6;
+}
+
+.card-link {
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+.main {
+  padding-top: 100px; /* adjust this to match header height */
+  max-width: 1200px;
+  margin: 0 auto;
+}
