@@ -7,6 +7,7 @@ import AboutMe from "./pages/AboutMe";
 import ChatWithGPT from "./pages/ChatWithGPT";
 import ResumeViewer from "./components/ResumeViewer";
 import GameCanvas from "./components/GameCanvas";
+import ProjectDetail from "./pages/ProjectDetail";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/play" element={<GameCanvas />} />
         <Route path="/resume" element={<ResumeViewer />} />
         <Route path="/documentation" element={<Documentation />} />
+        <Route path="/projects/:slug" element={<ProjectDetail />} />
       </Routes>
     </Router>
   );

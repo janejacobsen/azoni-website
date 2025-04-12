@@ -1,20 +1,17 @@
-// src/components/ProjectCard.jsx
-
 import React from "react";
+import { Link } from "react-router-dom";
 import "../styles/ProjectCard.css";
 
-const ProjectCard = ({ title, description, image, github }) => {
+const ProjectCard = ({ title, description, image, slug }) => {
   return (
-    <div className="project-card">
-      <img src={image} alt={title} className="project-image" />
-      <div className="project-content">
+    <Link to={`/projects/${slug}`} className="project-card-link">
+      <div className="project-card">
+        <img src={image} alt={title} />
         <h3>{title}</h3>
         <p>{description}</p>
-        <a href={github} target="_blank" rel="noopener noreferrer" className="project-link">
-          → View on GitHub
-        </a>
+        <span className="card-link">→ Learn more</span>
       </div>
-    </div>
+    </Link>
   );
 };
 
