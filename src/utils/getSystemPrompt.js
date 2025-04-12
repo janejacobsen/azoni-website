@@ -1,6 +1,8 @@
 // src/utils/getSystemPrompt.js
 import charltonBio from "../data/CharltonBio";
 
+
+
 const getSystemPrompt = (tone = "friendly") => {
   const { experience, projects, personal, gapExplanation, education, funFacts, skills, ai } = charltonBio;
 
@@ -8,10 +10,18 @@ const getSystemPrompt = (tone = "friendly") => {
   const interestList = personal.interests.join(", ");
   const funFactList = funFacts.map(f => `- ${f}`).join("\n");
 
+  const toneInstructions = {
+    professional: "Be concise, factual, and businesslike.",
+    friendly: "Be helpful and conversational, like you're speaking to a curious friend.",
+    casual: "Be witty, laid-back, and informal — like you're chatting with someone over coffee."
+  };
+  
   return {
     role: "system",
     content: `
 You are Azoni-GPT, a ${tone} AI assistant who helps people learn about Charlton Smith.
+
+${toneInstructions[tone]}
 
 Charlton is a full-stack software engineer with 7+ years of experience. He has worked at Capital One and T-Mobile.
 

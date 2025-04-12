@@ -6,8 +6,19 @@ import "../styles/ChatWithGPT.css";
 import getSystemPrompt from "../utils/getSystemPrompt";
 
 const ChatWithGPT = () => {
-  const [messages, setMessages] = useState([getSystemPrompt("friendly")]);
-  const [, setTone] = useState("friendly");
+  const getWelcomeMessage = (tone) => {
+    switch (tone) {
+      case "professional":
+        return "Welcome. I'm Azoni-GPT, here to answer any questions you have about Charlton Smith.";
+      case "casual":
+        return "Hey! I’m Azoni-GPT — wanna know what Charlton’s been building lately?";
+      default:
+        return "Hi! I'm Azoni-GPT. Ask me anything about Charlton Smith — his background, projects, or passions.";
+    }
+  };
+
+  const [tone, setTone] = useState("friendly");
+  const [messages, setMessages] = useState([getSystemPrompt(tone), { role: "assistant", content: getWelcomeMessage(tone) }]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef(null);
@@ -27,20 +38,26 @@ const ChatWithGPT = () => {
   const handleToneChange = (newTone) => {
     setTone(newTone);
     const newPrompt = getSystemPrompt(newTone);
-    const rest = messages.filter(msg => msg.role !== "system");
-    setMessages([newPrompt, ...rest]);
+    const welcome = { role: "assistant", content: getWelcomeMessage(newTone) };
+  
+    // Keep only user/assistant messages (drop old system + welcome)
+    const userMessages = messages.filter(m => m.role !== "system" && m.role !== "assistant" && m.role !== "user");
+  
+    setMessages([newPrompt, welcome, ...userMessages]);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-
-    const userMessage = { role: "user", content: input };
+  const handleSubmit = async (e = null, customInput = null) => {
+    if (e) e.preventDefault();
+  
+    const message = customInput || input;
+    if (!message.trim()) return;
+  
+    const userMessage = { role: "user", content: message };
     const updatedMessages = [...messages, userMessage];
     setMessages(updatedMessages);
     setInput("");
     setLoading(true);
-
+  
     try {
       const response = await axios.post("https://api.openai.com/v1/chat/completions", {
         model: "gpt-4",
@@ -52,23 +69,22 @@ const ChatWithGPT = () => {
           "Content-Type": "application/json"
         }
       });
-
+  
       const assistantReply = response.data.choices[0].message;
-      const newMessages = [...updatedMessages, assistantReply];
-      setMessages(newMessages);
-
-      // Log to your Flask app
+      setMessages([...updatedMessages, assistantReply]);
+  
       await axios.post("https://tweet-logger.onrender.com/log", {
         user_message: userMessage.content,
         assistant_reply: assistantReply.content
       });
-
+  
     } catch (error) {
       console.error("Error during chat or logging:", error);
     }
-
+  
     setLoading(false);
   };
+  
 
   return (
     <div className="container">
@@ -76,20 +92,31 @@ const ChatWithGPT = () => {
       <div className="chat-container">
         <h1 className="chat-heading">Azoni-GPT</h1>
         <div className="chat-controls">
-          <div className="tone-toggle">
-            <span>🧠 Tone:</span>
-            <button onClick={() => handleToneChange("professional")}>Professional</button>
-            <button onClick={() => handleToneChange("friendly")}>Friendly</button>
-            <button onClick={() => handleToneChange("casual")}>Casual</button>
-          </div>
-          <div className="preset-questions">
-            {presetQuestions.map((q, i) => (
-              <button key={i} onClick={() => setInput(q)}>{q}</button>
-            ))}
-          </div>
+        <div className="tone-toggle">
+          <span>🧠 Tone:</span>
+          {["professional", "friendly", "casual"].map((t) => (
+            <button
+              key={t}
+              onClick={() => handleToneChange(t)}
+              className={tone === t ? "active-tone" : ""}
+            >
+              {t.charAt(0).toUpperCase() + t.slice(1)}
+            </button>
+          ))}
+        </div>
+        <div className="preset-questions">
+          {presetQuestions.map((q, i) => (
+            <button
+              key={i}
+              onClick={() => handleSubmit(null, q)} // 👈 auto-submit
+            >
+              {q}
+            </button>
+          ))}
+        </div>
         </div>
         <div className="chat-box">
-          {messages.map((msg, i) => (
+          {messages.filter((msg) => msg.role !== "system").map((msg, i) => (
             <div
               key={i}
               className={`chat-bubble ${msg.role === "user" ? "user" : "assistant"} fade-in`}
