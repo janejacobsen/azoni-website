@@ -57,19 +57,37 @@ const ChatWithGPT = () => {
     setMessages(updatedMessages);
     setInput("");
     setLoading(true);
-  
+    setTimeout(() => setLoading(false), 2000); // 2-second cooldown
+
     try {
-      const response = await axios.post("https://api.openai.com/v1/chat/completions", {
-        model: "gpt-4",
+      // const response = await axios.post("https://api.openai.com/v1/chat/completions", {
+      //   model: "gpt-4",
+      //   messages: updatedMessages,
+      //   temperature: 0.7
+      // }, {
+      //   headers: {
+      //     Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+      //     "Content-Type": "application/json"
+      //   }
+      // });
+      // const usage = response.data.usage;
+      // console.log("Prompt tokens:", usage.prompt_tokens);
+      // console.log("Completion tokens:", usage.completion_tokens);
+      const response = await axios.post("https://openrouter.ai/api/v1/chat/completions", {
+        model: "openai/gpt-4", // or try mistralai/mixtral-8x7b or anthropic/claude-3-opus
         messages: updatedMessages,
         temperature: 0.7
       }, {
         headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
-          "Content-Type": "application/json"
+          Authorization: `Bearer ${process.env.REACT_APP_OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": "https://azoni.ai",   // optional but recommended
+          "X-Title": "AzoniGPT"                 // your app’s title
         }
       });
-  
+      
+      console.log(response)
+      
       const assistantReply = response.data.choices[0].message;
       setMessages([...updatedMessages, assistantReply]);
   
