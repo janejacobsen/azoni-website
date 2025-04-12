@@ -99,3 +99,28 @@
 .chat-button:hover {
   opacity: 0.9;
 }
+.chat-controls {
+  margin-bottom: 1rem;
+}
+
+.tone-toggle span {
+  margin-right: 0.5rem;
+  font-weight: bold;
+}
+
+.tone-toggle button,
+.preset-questions button {
+  margin: 0 0.25rem 0.5rem 0;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  border: none;
+  background-color: #334155;
+  color: white;
+  cursor: pointer;
+}
+
+.tone-toggle button:hover,
+.preset-questions button:hover {
+  background-color: #475569;
+}

@@ -3,17 +3,33 @@ import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/ChatWithGPT.css";
-
+import getSystemPrompt from "../utils/getSystemPrompt";
 
 const ChatWithGPT = () => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([getSystemPrompt("friendly")]);
+  const [, setTone] = useState("friendly");
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef(null);
 
+  const presetQuestions = [
+    "What’s Charlton’s background?",
+    "What is Azoni AI?",
+    "What projects has Charlton built?",
+    "What makes Charlton a strong hire?",
+    "What are some fun facts about Charlton?"
+  ];
+
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
+
+  const handleToneChange = (newTone) => {
+    setTone(newTone);
+    const newPrompt = getSystemPrompt(newTone);
+    const rest = messages.filter(msg => msg.role !== "system");
+    setMessages([newPrompt, ...rest]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,7 +75,19 @@ const ChatWithGPT = () => {
       <Header />
       <div className="chat-container">
         <h1 className="chat-heading">Azoni-GPT</h1>
-
+        <div className="chat-controls">
+          <div className="tone-toggle">
+            <span>🧠 Tone:</span>
+            <button onClick={() => handleToneChange("professional")}>Professional</button>
+            <button onClick={() => handleToneChange("friendly")}>Friendly</button>
+            <button onClick={() => handleToneChange("casual")}>Casual</button>
+          </div>
+          <div className="preset-questions">
+            {presetQuestions.map((q, i) => (
+              <button key={i} onClick={() => setInput(q)}>{q}</button>
+            ))}
+          </div>
+        </div>
         <div className="chat-box">
           {messages.map((msg, i) => (
             <div
