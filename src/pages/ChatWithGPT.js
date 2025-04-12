@@ -74,7 +74,7 @@ const ChatWithGPT = () => {
       // console.log("Prompt tokens:", usage.prompt_tokens);
       // console.log("Completion tokens:", usage.completion_tokens);
       const response = await axios.post("https://openrouter.ai/api/v1/chat/completions", {
-        model: "openai/gpt-4", // or try mistralai/mixtral-8x7b or anthropic/claude-3-opus
+        model: "openai/gpt-3.5-turbo", // or try mistralai/mixtral-8x7b or anthropic/claude-3-opus
         messages: updatedMessages,
         temperature: 0.7
       }, {
