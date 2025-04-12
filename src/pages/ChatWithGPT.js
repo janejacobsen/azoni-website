@@ -80,6 +80,12 @@ const ChatWithGPT = () => {
   
     } catch (error) {
       console.error("Error during chat or logging:", error);
+
+      const fallbackReply = {
+        role: "assistant",
+        content: "Sorry, I'm currently unavailable. Please try again in a moment!"
+      };
+      setMessages([...updatedMessages, fallbackReply]);
     }
   
     setLoading(false);
