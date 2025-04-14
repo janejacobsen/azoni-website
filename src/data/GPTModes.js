@@ -3,7 +3,7 @@ import getSystemPrompt from "../utils/getSystemPrompt";
 export const GPT_MODES = {
   azoni: {
     name: "Azoni-GPT",
-    systemPrompt:  (tone) => {return getSystemPrompt(tone)},
+    systemPrompt: (tone) => {return getSystemPrompt(tone)},
     welcomeMessage: (tone) => {
       switch (tone) {
         case "professional":
@@ -25,9 +25,9 @@ export const GPT_MODES = {
     model: "openai/gpt-3.5-turbo",
   },
   pdf: {
-    name: "PDF-GPT",
+    name: "PDF-GPT - Coming Soon.",
     systemPrompt: () =>
-      `You're PDF-GPT. Only answer questions based on uploaded documents. Do not use external knowledge.`,
+      `You are FAB-GPT, a strategic assistant for the Flesh and Blood trading card game. You specialize in card knowledge, meta analysis, gameplay tactics, deckbuilding advice, rules clarifications, event coverage, and lore. Always give answers based on official card text, tournament data, or lore when applicable. Be precise, helpful, and conversational — like a skilled player helping a friend.`,
     welcomeMessage: () =>
       "You're chatting with PDF-GPT. It will only answer based on uploaded documents.",
     presetQuestions: [

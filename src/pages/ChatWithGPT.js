@@ -21,20 +21,13 @@ const ChatWithGPT = () => {
       { role: "assistant", content: initialConfig.welcomeMessage(tone) }
     ];
   });
-
+  const [pdfName] = useState(null);
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
   const handleToneChange = (newTone) => {
     setTone(newTone);
-    const newPrompt = { role: "system", content: gptConfig.systemPrompt(newTone) };
-    const welcome = { role: "assistant", content: gptConfig.welcomeMessage(newTone) };
-  
-    // Keep only user/assistant messages (drop old system + welcome)
-    const userMessages = messages.filter(m => m.role !== "system" && m.role !== "assistant" && m.role !== "user");
-  
-    setMessages([newPrompt, welcome, ...userMessages]);
   };
 
   const handleSubmit = async (e = null, customInput = null) => {
@@ -49,6 +42,7 @@ const ChatWithGPT = () => {
     setInput("");
     setLoading(true);
     setTimeout(() => setLoading(false), 2000); // 2-second cooldown
+
     // const endpoint =
     //   chatMode === "pdf"
     //     ? "https://your-backend/pdf-chat" // ← this will be your Flask PDF endpoint
@@ -116,6 +110,7 @@ const ChatWithGPT = () => {
       gptConfig.systemPrompt(tone),
       { role: "assistant", content: gptConfig.welcomeMessage(tone) }
     ]);
+    setInput("");
   }, [chatMode, gptConfig, tone]);
 
   return (
@@ -175,7 +170,20 @@ const ChatWithGPT = () => {
             BENCH-GPT
           </button>
         </div>
-
+        {chatMode === "pdf" && (
+          <div className="pdf-upload">
+            <label>
+              Upload PDF:
+              <input
+                type="file"
+                accept="application/pdf"
+                onChange={async (e) => {
+                }}
+              />
+            </label>
+            {pdfName && <p>📎 {pdfName} loaded</p>}
+          </div>
+        )}
         <div className="chat-box">
           {messages.filter((msg) => msg.role !== "system").map((msg, i) => (
             <div
