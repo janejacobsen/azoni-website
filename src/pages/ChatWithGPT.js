@@ -163,13 +163,13 @@ const ChatWithGPT = () => {
             PDF-GPT
           </button>
           <button
-            className={chatMode === "pdf" ? "active" : ""}
+            className={chatMode === "fab" ? "active" : ""}
             onClick={() => setChatMode("fab")}
           >
             FAB-GPT
           </button>
           <button
-            className={chatMode === "pdf" ? "active" : ""}
+            className={chatMode === "bench" ? "active" : ""}
             onClick={() => setChatMode("bench")}
           >
             BENCH-GPT
