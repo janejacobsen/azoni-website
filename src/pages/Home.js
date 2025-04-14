@@ -46,7 +46,7 @@ const Home = () => {
       <Header />
       <main className="main">
         <section className="hero">
-          <h1 className="hero-title">Hi, I’m Charlton 👋</h1>
+          <h1 className="hero-title">Hi</h1>
           <p className="hero-subtitle">Explore my world of code, creativity, and community-driven tools.</p>
         </section>
         <div className="card-grid">

@@ -317,7 +317,11 @@ const GameCanvas = () => {
   return (
     <div className="container">
       <Header />
-      <div style={{ position: "relative", width: "100%", height: "700px", border: "2px solid black", marginTop: "80px" }}>
+      <div className="main">
+        <h2>Under Construction</h2>
+      </div>
+      
+      <div style={{ position: "relative", width: "100%", height: "700px", border: "2px solid black", marginTop: "20px" }}>
         {!playerName || !playerAvatar ? (
           <CharacterSelection onConfirm={(name, avatar) => {
             setPlayerName(name);
