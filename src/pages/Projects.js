@@ -12,7 +12,7 @@ const Projects = () => {
     <div className="container">
       <Header />
       <main className="main">
-        <h2 className="page-title">My Projects</h2>
+        <h2 className="page-title">My Projects - Under construction, details are not finalized.</h2>
         <p className="page-subtitle">A collection of tools, games, and AI experiments I've built.</p>
         <div className="project-grid">
           {projects.map((project, index) => (

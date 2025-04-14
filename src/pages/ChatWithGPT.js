@@ -3,33 +3,24 @@ import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/ChatWithGPT.css";
-import getSystemPrompt from "../utils/getSystemPrompt";
+import { GPT_MODES } from "../data/GPTModes";
 
 const ChatWithGPT = () => {
-  const getWelcomeMessage = (tone) => {
-    switch (tone) {
-      case "professional":
-        return "Welcome. I'm Azoni-GPT, here to answer any questions you have about Charlton Smith.";
-      case "casual":
-        return "Hey! I’m Azoni-GPT — wanna know what Charlton’s been building lately?";
-      default:
-        return "Hi! I'm Azoni-GPT. Ask me anything about Charlton Smith — his background, projects, or passions.";
-    }
-  };
 
   const [tone, setTone] = useState("friendly");
-  const [messages, setMessages] = useState([getSystemPrompt(tone), { role: "assistant", content: getWelcomeMessage(tone) }]);
+  // const [messages, setMessages] = useState([getSystemPrompt(tone), { role: "assistant", content: getWelcomeMessage(tone) }]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef(null);
-
-  const presetQuestions = [
-    "What’s Charlton’s background?",
-    "What is Azoni AI?",
-    "What projects has Charlton built?",
-    "What makes Charlton a strong hire?",
-    "What are some fun facts about Charlton?"
-  ];
+  const [chatMode, setChatMode] = useState("azoni"); // "azoni" or "pdf"
+  const gptConfig = GPT_MODES[chatMode];
+  const [messages, setMessages] = useState(() => {
+    const initialConfig = GPT_MODES["azoni"];
+    return [
+      gptConfig.systemPrompt(tone),
+      { role: "assistant", content: initialConfig.welcomeMessage(tone) }
+    ];
+  });
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -37,8 +28,8 @@ const ChatWithGPT = () => {
 
   const handleToneChange = (newTone) => {
     setTone(newTone);
-    const newPrompt = getSystemPrompt(newTone);
-    const welcome = { role: "assistant", content: getWelcomeMessage(newTone) };
+    const newPrompt = { role: "system", content: gptConfig.systemPrompt(newTone) };
+    const welcome = { role: "assistant", content: gptConfig.welcomeMessage(newTone) };
   
     // Keep only user/assistant messages (drop old system + welcome)
     const userMessages = messages.filter(m => m.role !== "system" && m.role !== "assistant" && m.role !== "user");
@@ -48,7 +39,7 @@ const ChatWithGPT = () => {
 
   const handleSubmit = async (e = null, customInput = null) => {
     if (e) e.preventDefault();
-  
+    
     const message = customInput || input;
     if (!message.trim()) return;
   
@@ -58,7 +49,12 @@ const ChatWithGPT = () => {
     setInput("");
     setLoading(true);
     setTimeout(() => setLoading(false), 2000); // 2-second cooldown
-
+    // const endpoint =
+    //   chatMode === "pdf"
+    //     ? "https://your-backend/pdf-chat" // ← this will be your Flask PDF endpoint
+    //     : "https://openrouter.ai/api/v1/chat/completions";
+    console.log(gptConfig)
+    console.log(updatedMessages)
     try {
       // const response = await axios.post("https://api.openai.com/v1/chat/completions", {
       //   model: "gpt-4",
@@ -73,7 +69,7 @@ const ChatWithGPT = () => {
       // const usage = response.data.usage;
       // console.log("Prompt tokens:", usage.prompt_tokens);
       // console.log("Completion tokens:", usage.completion_tokens);
-      const response = await axios.post("https://openrouter.ai/api/v1/chat/completions", {
+      const response = await axios.post(gptConfig.endpoint, {
         model: "openai/gpt-3.5-turbo", // or try mistralai/mixtral-8x7b or anthropic/claude-3-opus
         messages: updatedMessages,
         temperature: 0.7
@@ -85,12 +81,19 @@ const ChatWithGPT = () => {
           "X-Title": "AzoniGPT"                 // your app’s title
         }
       });
-      
+      console.log("API response data:", response.data);
       console.log(response)
       
-      const assistantReply = response.data.choices[0].message;
+      console.log("Full API response:", response);
+      console.log("System prompt:", gptConfig.systemPrompt(tone))
+
+      const choices = response?.data?.choices;
+      if (!choices || choices.length === 0) {
+        throw new Error("No choices returned from API.");
+      }
+      const assistantReply = choices[0].message;
       setMessages([...updatedMessages, assistantReply]);
-  
+        
       await axios.post("https://tweet-logger.onrender.com/log", {
         user_message: userMessage.content,
         assistant_reply: assistantReply.content
@@ -108,13 +111,20 @@ const ChatWithGPT = () => {
   
     setLoading(false);
   };
-  
+  useEffect(() => {
+    setMessages([
+      gptConfig.systemPrompt(tone),
+      { role: "assistant", content: gptConfig.welcomeMessage(tone) }
+    ]);
+  }, [chatMode, gptConfig, tone]);
 
   return (
     <div className="container">
       <Header />
       <div className="chat-container">
-        <h1 className="chat-heading">Azoni-GPT</h1>
+        
+      <h1 className="chat-heading">{gptConfig.name}</h1>
+
         <div className="chat-controls">
         <div className="tone-toggle">
           <span>🧠 Tone:</span>
@@ -129,7 +139,7 @@ const ChatWithGPT = () => {
           ))}
         </div>
         <div className="preset-questions">
-          {presetQuestions.map((q, i) => (
+          {gptConfig.presetQuestions.map((q, i) => (
             <button
               key={i}
               onClick={() => handleSubmit(null, q)} // 👈 auto-submit
@@ -139,6 +149,33 @@ const ChatWithGPT = () => {
           ))}
         </div>
         </div>
+        <div className="chat-mode-toggle">
+          <button
+            className={chatMode === "azoni" ? "active" : ""}
+            onClick={() => setChatMode("azoni")}
+          >
+            Azoni-GPT
+          </button>
+          <button
+            className={chatMode === "pdf" ? "active" : ""}
+            onClick={() => setChatMode("pdf")}
+          >
+            PDF-GPT
+          </button>
+          <button
+            className={chatMode === "pdf" ? "active" : ""}
+            onClick={() => setChatMode("fab")}
+          >
+            FAB-GPT
+          </button>
+          <button
+            className={chatMode === "pdf" ? "active" : ""}
+            onClick={() => setChatMode("bench")}
+          >
+            BENCH-GPT
+          </button>
+        </div>
+
         <div className="chat-box">
           {messages.filter((msg) => msg.role !== "system").map((msg, i) => (
             <div
