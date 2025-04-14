@@ -107,7 +107,6 @@ const ChatWithGPT = () => {
   };
   useEffect(() => {
     setMessages([
-      gptConfig.systemPrompt(tone),
       { role: "assistant", content: gptConfig.welcomeMessage(tone) }
     ]);
     setInput("");
