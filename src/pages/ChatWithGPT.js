@@ -14,13 +14,16 @@ const ChatWithGPT = () => {
   const chatEndRef = useRef(null);
   const [chatMode, setChatMode] = useState("azoni"); // "azoni" or "pdf"
   const gptConfig = GPT_MODES[chatMode];
-  const [messages, setMessages] = useState(() => {
-    const initialConfig = GPT_MODES["azoni"];
-    return [
-      gptConfig.systemPrompt(tone),
-      { role: "assistant", content: initialConfig.welcomeMessage(tone) }
-    ];
-  });
+  const [messages, setMessages] = useState([]);
+
+  // const [messages, setMessages] = useState(() => {
+  //   const initialConfig = GPT_MODES["azoni"];
+  //   return [
+  //     gptConfig.systemPrompt(tone),
+  //     { role: "assistant", content: initialConfig.welcomeMessage(tone) }
+  //   ];
+  // });
+
   const [pdfName] = useState(null);
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -106,12 +109,17 @@ const ChatWithGPT = () => {
     setLoading(false);
   };
   useEffect(() => {
-    setMessages([
-      gptConfig.systemPrompt(tone),
-      { role: "assistant", content: gptConfig.welcomeMessage(tone) }
-    ]);
+    const config = GPT_MODES[chatMode];
+    const systemMessage = config.systemPrompt?.(tone);
+    const welcomeMessage = config.welcomeMessage?.(tone);
+  
+    const newMessages = [];
+    if (systemMessage) newMessages.push(systemMessage);
+    if (welcomeMessage) newMessages.push({ role: "assistant", content: welcomeMessage });
+  
+    setMessages(newMessages);
     setInput("");
-  }, [chatMode, gptConfig, tone]);
+  }, [chatMode, tone]);
 
   return (
     <div className="container">
@@ -198,7 +206,7 @@ const ChatWithGPT = () => {
                   {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
               </div>
-              <div className="chat-content">{msg.content}</div>
+              <div className="chat-content">{msg.content?.trim() || "[No message]"}</div>
             </div>
           ))}
           {loading && (
