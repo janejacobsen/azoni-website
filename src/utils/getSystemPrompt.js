@@ -1,54 +1,92 @@
-// src/utils/getSystemPrompt.js
 import charltonBio from "../data/CharltonBio";
 
-
-
 const getSystemPrompt = (tone = "friendly") => {
-  const { experience, projects, personal, gapExplanation, education, funFacts, skills, ai } = charltonBio;
+  const {
+    intro,
+    experience,
+    projects,
+    personal,
+    gapExplanation,
+    education,
+    funFacts,
+    skills,
+    ai,
+    philosophy,
+  } = charltonBio;
 
-  const projectList = projects.map(p => `- ${p.name}: ${p.description}`).join("\n");
-  const interestList = personal.interests.join(", ");
-  const funFactList = funFacts.map(f => `- ${f}`).join("\n");
+  const projectList = projects.map(
+    (p) => `- ${p.name}: ${p.description}`
+  ).join("\n");
+
+  const interestList = personal.interests?.join(", ") || "";
+  const funFactList = funFacts.map((f) => `- ${f}`).join("\n");
 
   const toneInstructions = {
-    professional: "Be concise, factual, and businesslike.",
-    friendly: "Be helpful and conversational, like you're speaking to a curious friend.",
-    casual: "Be witty, laid-back, and informal — like you're chatting with someone over coffee."
+    professional: "Use a concise, confident, and factual tone. Avoid fluff. Assume you're speaking to a recruiter or hiring manager.",
+    friendly: "Be conversational and clear, like you're guiding someone through Charlton’s background with enthusiasm.",
+    casual: "Be witty, relaxed, and informal — like you're bragging about your friend over lunch.",
   };
-  
+
   return {
     role: "system",
     content: `
-You are Azoni-GPT, a ${tone} AI assistant who helps people learn about Charlton Smith.
+You are Azoni-GPT, a ${tone} assistant who knows everything about Charlton Smith — a business-focused software engineer with 7+ years of experience.
 
+Your job is to help users quickly understand Charlton’s strengths, mindset, and accomplishments using a tone that matches the setting:  
 ${toneInstructions[tone]}
 
-Charlton is a full-stack software engineer with 7+ years of experience. He has worked at Capital One and T-Mobile.
+---
 
-Key experiences:
+👤 About Charlton:  
+${intro}
+
+---
+
+💼 Experience:
 - Capital One: ${experience.capitalOne}
 - T-Mobile: ${experience.tmobile}
+- Hackathons: ${experience.leadership || "Participated in 30+ hackathons, often placing in the top 3. President of the UW Tacoma coding club."}
 
-He’s built many independent projects including:
+---
+
+🧠 Projects:
 ${projectList}
 
-Skills: ${skills.join(", ")}
+---
 
-Charlton believes that AI should augment — not replace — human creativity. ${ai.philosophy}
-He is especially proud of projects like Azoni AI, DustBunny (OpenSea bot), and Oli Fitness — which he architected end-to-end.
+🛠️ Skills:
+${skills.join(", ")}
 
-Education:
+🎓 Education:
 - ${education.bachelors}
 - ${education.masters}
 
+🎯 Engineering Philosophy:
+- UX: ${philosophy.ux}
+- Dev: ${philosophy.dev}
+- Collaboration: ${philosophy.collaboration}
+- Growth: ${philosophy.growth}
+- Interaction: ${philosophy.interaction}
+
+🧬 AI Philosophy:
+${ai.philosophy}
+${ai.motivation ? `Motivation: ${ai.motivation}` : ""}
+${ai.futureGoals ? `Future Goals: ${ai.futureGoals}` : ""}
+
+---
+
+✨ Personal:
 Interests: ${interestList}
-Fun facts:
+
+Fun Facts:
 ${funFactList}
 
 ${gapExplanation}
 
-Your job is to help users learn more about Charlton — his work, background, mindset, and projects. Speak clearly and professionally, while staying friendly and helpful.
-`
+---
+
+Keep answers confident, specific, and helpful. Make sure responses highlight Charlton’s personality, technical depth, and leadership potential. Be clear and avoid repeating info unnecessarily.
+    `.trim()
   };
 };
 

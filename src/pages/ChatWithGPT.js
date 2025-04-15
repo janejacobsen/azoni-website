@@ -107,6 +107,7 @@ const ChatWithGPT = () => {
   };
   useEffect(() => {
     setMessages([
+      gptConfig.systemPrompt(tone),
       { role: "assistant", content: gptConfig.welcomeMessage(tone) }
     ]);
     setInput("");
@@ -118,32 +119,7 @@ const ChatWithGPT = () => {
       <div className="chat-container">
         
       <h1 className="chat-heading">{gptConfig.name}</h1>
-
-        <div className="chat-controls">
-        <div className="tone-toggle">
-          <span>🧠 Tone:</span>
-          {["professional", "friendly", "casual"].map((t) => (
-            <button
-              key={t}
-              onClick={() => handleToneChange(t)}
-              className={tone === t ? "active-tone" : ""}
-            >
-              {t.charAt(0).toUpperCase() + t.slice(1)}
-            </button>
-          ))}
-        </div>
-        <div className="preset-questions">
-          {gptConfig.presetQuestions.map((q, i) => (
-            <button
-              key={i}
-              onClick={() => handleSubmit(null, q)} // 👈 auto-submit
-            >
-              {q}
-            </button>
-          ))}
-        </div>
-        </div>
-        <div className="chat-mode-toggle">
+      <div className="chat-mode-toggle">
           <button
             className={chatMode === "azoni" ? "active" : ""}
             onClick={() => setChatMode("azoni")}
@@ -169,6 +145,31 @@ const ChatWithGPT = () => {
             BENCH-GPT
           </button>
         </div>
+        <div className="chat-controls">
+        <div className="tone-toggle">
+          <span>🧠 Tone:</span>
+          {["professional", "friendly", "casual"].map((t) => (
+            <button
+              key={t}
+              onClick={() => handleToneChange(t)}
+              className={tone === t ? "active-tone" : ""}
+            >
+              {t.charAt(0).toUpperCase() + t.slice(1)}
+            </button>
+          ))}
+        </div>
+        <div className="preset-questions">
+          {gptConfig.presetQuestions.map((q, i) => (
+            <button
+              key={i}
+              onClick={() => handleSubmit(null, q)} // 👈 auto-submit
+            >
+              {q}
+            </button>
+          ))}
+        </div>
+        </div>
+        
         {chatMode === "pdf" && (
           <div className="pdf-upload">
             <label>
