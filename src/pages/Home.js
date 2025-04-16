@@ -39,6 +39,14 @@ const sections = [
     description: "My Resume!",
   },
 ];
+const posts = [
+  {
+    title: "Ghibli Style Image Gen",
+    image: "/avatars/charlton-ghibli.png",
+    snippet: "Experimenting with cartoon-to-anime image transfer using ControlNet + a fine-tuned LCM model.",
+    link: "/projects/ghibli-style"
+  },
+];
 
 const Home = () => {
   return (
@@ -47,8 +55,28 @@ const Home = () => {
       <main className="main">
         <section className="hero">
           <h1 className="hero-title">Hi</h1>
-          <p className="hero-subtitle">Explore my world of code, creativity, and community-driven tools.</p>
+          <div className="recruiter-banner">
+          <p>Explore my world of code, creativity, community-driven tools and the custom GPT I built to help answer your questions about me.</p>
+          <a href="/Resume" className="banner-link">View Resume</a> · <a href="/Chat" className="banner-link">Chat with Azoni-GPT</a>
+        </div>
         </section>
+        <div className="ai-blog-section">
+        <h2>Whats new with AI?</h2>
+          <div className="ai-blog-grid">
+            
+            {posts.map((post, i) => (
+              <div className="ai-post" key={i}>
+                <img src={post.image} alt={post.title} />
+                <h4>{post.title}</h4>
+                <p>{post.snippet}</p>
+                {post.link && <a href={post.link} target="_blank" rel="noopener noreferrer">→ Read more</a>}
+              </div>
+            ))}
+          </div>
+        </div>
+
+
+
         <div className="card-grid">
           {sections.map((section) =>
             section.path.startsWith("http") ? (
