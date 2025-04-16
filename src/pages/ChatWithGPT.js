@@ -24,10 +24,11 @@ const ChatWithGPT = () => {
   //   ];
   // });
 
-  const [pdfName] = useState(null);
+  // const [pdfName] = useState(null);
+
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, loading]);
+  }, [loading]);
 
   const handleToneChange = (newTone) => {
     setTone(newTone);
@@ -127,6 +128,19 @@ const ChatWithGPT = () => {
       <div className="chat-container">
         
       <h1 className="chat-heading">{gptConfig.name}</h1>
+
+      <div className="tone-toggle">
+          <span>🧠 Tone:</span>
+          {["professional", "friendly", "casual"].map((t) => (
+            <button
+              key={t}
+              onClick={() => handleToneChange(t)}
+              className={tone === t ? "active-tone" : ""}
+            >
+              {t.charAt(0).toUpperCase() + t.slice(1)}
+            </button>
+          ))}
+        </div>
       <div className="chat-mode-toggle">
           <button
             className={chatMode === "azoni" ? "active" : ""}
@@ -154,18 +168,7 @@ const ChatWithGPT = () => {
           </button>
         </div>
         <div className="chat-controls">
-        <div className="tone-toggle">
-          <span>🧠 Tone:</span>
-          {["professional", "friendly", "casual"].map((t) => (
-            <button
-              key={t}
-              onClick={() => handleToneChange(t)}
-              className={tone === t ? "active-tone" : ""}
-            >
-              {t.charAt(0).toUpperCase() + t.slice(1)}
-            </button>
-          ))}
-        </div>
+        
         <div className="preset-questions">
           {gptConfig.presetQuestions.map((q, i) => (
             <button
@@ -178,7 +181,7 @@ const ChatWithGPT = () => {
         </div>
         </div>
         
-        {chatMode === "pdf" && (
+        {/* {chatMode === "pdf" && (
           <div className="pdf-upload">
             <label>
               Upload PDF:
@@ -191,7 +194,7 @@ const ChatWithGPT = () => {
             </label>
             {pdfName && <p>📎 {pdfName} loaded</p>}
           </div>
-        )}
+        )} */}
         <div className="chat-box">
           {messages.filter((msg) => msg.role !== "system").map((msg, i) => (
             <div

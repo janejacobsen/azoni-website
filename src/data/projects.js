@@ -6,10 +6,6 @@ const projects = [
     slug: "azoni-ai",
     description: "Customize AI agents with unique personalities.",
     image: "/projects/seal.png",
-    images: [
-      "/projects/ape.png",
-      "/projects/bear.png",
-    ],
     github: "https://github.com/azoni/azoni-package",
     details: `
       <h3>Overview</h3>
@@ -35,17 +31,25 @@ const projects = [
     github: "https://github.com/azoni/adoh-dps",
     details: `
       <h3>About</h3>
-      <p></p>
+      <p>A Dawn of Heroes is a community-driven Neverwinter Nights server focused on long-term progression, immersive storytelling, and quality-of-life enhancements for players. As part of the developer team, I’ve contributed to rebalancing game mechanics, improving player experience, and extending the game's core scripting systems.</p>
 
       <h3>Highlights</h3>
       <ul>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li>
+          Reworked weapons and combat to be more balanced and rewarding for all classes.
+        </li>
+        <li>
+          Added custom mechanics such as item prefixes, scaling stats, and environmental triggers using NWScript.
+        </li>
+        <li>
+        Implemented QoL improvements including restructured loot tables, persistent banking, and modular NPC behaviors.
+        </li>
       </ul>
 
       <h3>Stack</h3>
-      <p>Python</p>
+      <p>NWScript (Neverwinter’s scripting language)</p>
+      <p>Object-Oriented Design</p>
+      <p>Python (for external tools and automation)</p>
     `
   },
   {
@@ -54,6 +58,11 @@ const projects = [
     description: "OpenSea bidding platform built for speed and automation.",
     image: "/projects/opensea.png",
     github: "https://github.com/azoni/dustbunny",
+    images: [
+      "/projects/dustbunny1.png",
+      "/projects/dustbunny2.png",
+      "/projects/dustbunny3.png",
+    ],
     details: `
       <h3>Overview</h3>
       <p>DustBunny is a Python-based bidding bot for OpenSea that helps place and manage bids on NFT collections at scale.</p>
@@ -94,8 +103,7 @@ const projects = [
     image: "/projects/tmobile.png",
     github: "https://github.com/azoni/hashmaps",
     images: [
-      "/projects/ape.png",
-      "/projects/bear.png",
+      "/projects/tmobile1.png",
     ],
     details: `
       <h3>About</h3>

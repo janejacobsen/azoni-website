@@ -4,16 +4,14 @@ export const GPT_MODES = {
   azoni: {
     name: "Azoni-GPT",
     systemPrompt: (tone) => {return getSystemPrompt(tone)},
-    welcomeMessage: (tone) => {
-      switch (tone) {
-        case "professional":
-          return "Welcome. I'm Azoni-GPT, here to answer any questions you have about Charlton Smith.";
-        case "casual":
-          return "Hey! I’m Azoni-GPT — wanna know what Charlton’s been building lately?";
-        default:
-          return "Hi! I'm Azoni-GPT. Ask me anything about Charlton Smith — his background, projects, or passions.";
-      }
-    },
+    welcomeMessage: () => {return `
+    Azoni-GPT is your interactive assistant to learn more about Charlton Smith — his background, skills, projects, and what makes him a standout candidate.
+    
+    Recruiters: Paste a job description, and Azoni-GPT will explain why Charlton is a strong fit.
+    Hiring Managers: Ask about Charlton’s experience with specific technologies or projects.
+    Curious Visitors: Try questions like “What is Azoni AI?” or “What are some fun facts about Charlton?”
+    You can also switch between tones (Professional, Friendly, Casual) to see different communication styles.`
+  },
     presetQuestions: [
       "What’s Charlton’s background?",
       "What is Azoni AI?",
