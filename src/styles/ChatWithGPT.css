@@ -28,7 +28,7 @@
 .chat-bubble {
   padding: 10px 14px;
   border-radius: 10px;
-  max-width: 100%;
+  max-width: 90%;
   line-height: 1.5;
   font-size: 0.95rem;
   white-space: pre-wrap;

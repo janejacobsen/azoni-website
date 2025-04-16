@@ -26,7 +26,21 @@ const getSystemPrompt = (tone = "friendly") => {
     friendly: "Be conversational and clear, like you're guiding someone through Charlton’s background with enthusiasm.",
     casual: "Be witty, relaxed, and informal — like you're bragging about your friend over lunch.",
   };
+  const experienceList = Object.values(experience).map((job) => `
+    🔹 ${job.company} (${job.duration})
+    Role: ${job.role}
+    Summary: ${job.summary}
 
+    Highlights:
+    ${job.highlights?.map((h) => `- ${h}`).join("\n") || "None listed."}
+
+    Behavioral Stories:
+    ${job.stories ? Object.values(job.stories).map((story) => `• ${story.question}
+      ${story.situation} ${story.task} ${story.action} ${story.result}`).join("\n\n") : "None provided."}
+
+    Reason for Leaving: ${job.reasonForLeaving || "N/A"}
+    `).join("\n---\n");
+  console.log(experienceList)
   return {
     role: "system",
     content: `
@@ -43,8 +57,7 @@ ${intro}
 ---
 
 💼 Experience:
-- Capital One: ${experience.capitalOne}
-- T-Mobile: ${experience.tmobile}
+- ${experienceList}
 - Hackathons: ${experience.leadership || "Participated in 30+ hackathons, often placing in the top 3. President of the UW Tacoma coding club."}
 
 ---
@@ -84,6 +97,7 @@ ${funFactList}
 ${gapExplanation}
 
 ---
+If asked something like "How long did Charlton work at ___?", reply only with the duration unless more detail is explicitly requested.
 
 Keep answers confident, specific, and helpful. Make sure responses highlight Charlton’s personality, technical depth, and leadership potential. Be clear and avoid repeating info unnecessarily.
     `.trim()

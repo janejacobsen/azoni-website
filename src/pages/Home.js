@@ -60,22 +60,6 @@ const Home = () => {
           <a href="/Resume" className="banner-link">View Resume</a> · <a href="/Chat" className="banner-link">Chat with Azoni-GPT</a>
         </div>
         </section>
-        <div className="ai-blog-section">
-        <h2>Whats new with AI?</h2>
-          <div className="ai-blog-grid">
-            
-            {posts.map((post, i) => (
-              <div className="ai-post" key={i}>
-                <img src={post.image} alt={post.title} />
-                <h4>{post.title}</h4>
-                <p>{post.snippet}</p>
-                {post.link && <a href={post.link} target="_blank" rel="noopener noreferrer">→ Read more</a>}
-              </div>
-            ))}
-          </div>
-        </div>
-
-
 
         <div className="card-grid">
           {sections.map((section) =>
@@ -99,6 +83,20 @@ const Home = () => {
               </Link>
             )
           )}
+        </div>
+        <div className="ai-blog-section">
+          <h2>Whats new with AI?</h2>
+          <div className="ai-blog-grid">
+            
+            {posts.map((post, i) => (
+              <div className="ai-post" key={i}>
+                <img src={post.image} alt={post.title} />
+                <h4>{post.title}</h4>
+                <p>{post.snippet}</p>
+                {post.link && <a href={post.link} target="_blank" rel="noopener noreferrer">→ Read more</a>}
+              </div>
+            ))}
+          </div>
         </div>
         {/* <GameCanvas /> */}
       </main>
