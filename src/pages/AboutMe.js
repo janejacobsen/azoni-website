@@ -19,7 +19,7 @@ const AboutMe = () => {
         </div>
 
         <p>
-          From <strong>multiplayer web games</strong> to <strong>AI-powered applications</strong>, I specialize in <strong>full-stack development</strong>,
+          From <strong>web development</strong> to <strong>AI-powered applications</strong>, I specialize in <strong>full-stack development</strong>,
           <strong> object-oriented programming</strong>, and <strong>system architecture</strong>. My career spans <em>fintech, blockchain, and game development</em>,
           giving me a versatile edge when designing creative and production-grade systems.
         </p>
@@ -55,7 +55,7 @@ const AboutMe = () => {
 
         <section className="about-section">
           <h3>Tech Stack</h3>
-          <p><strong>Languages:</strong> Python, TypeScript/JavaScript, SQL, C#</p>
+          <p><strong>Languages:</strong> Python, JavaScript, SQL, C#, Java</p>
           <p><strong>Frameworks:</strong> React, Flask, Express, FastAPI, Unity</p>
           <p><strong>Databases:</strong> PostgreSQL, SQLite, Firebase</p>
           <p><strong>Cloud & Infra:</strong> AWS, Vercel, Netlify</p>

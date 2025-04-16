@@ -30,22 +30,22 @@ const projects = [
   {
     title: "A Dawn of Heroes",
     slug: "a-dawn-of-heroes",
-    description: "Multiplayer game project with live movement and skill-based interaction.",
+    description: "Volunteer developer working on a persistent world in Neverwinter Nights.",
     image: "/projects/nwn.png",
     github: "https://github.com/azoni/adoh-dps",
     details: `
       <h3>About</h3>
-      <p>A 2D multiplayer game where players can move in real-time, chop trees, level up woodcutting, chat, and trade.</p>
+      <p></p>
 
       <h3>Highlights</h3>
       <ul>
-        <li>Real-time player movement via WebSockets</li>
-        <li>Custom avatar selection and WASD control</li>
-        <li>Skills, XP, inventory, and trade system</li>
+        <li></li>
+        <li></li>
+        <li></li>
       </ul>
 
       <h3>Stack</h3>
-      <p>React, Node.js, WebSockets, Canvas API</p>
+      <p>Python</p>
     `
   },
   {
@@ -83,29 +83,33 @@ const projects = [
       <ul>
         <li>Personal dashboards</li>
         <li>Community leaderboards</li>
-        <li>Google Fit integration</li>
+        <li></li>
       </ul>
     `
   },
   {
     title: "HashMaps",
     slug: "hashmaps",
-    description: "T-Mobile Hackathon finalist – real-time location-based music app.",
+    description: "T-Mobile Hackathon",
     image: "/projects/tmobile.png",
     github: "https://github.com/azoni/hashmaps",
+    images: [
+      "/projects/ape.png",
+      "/projects/bear.png",
+    ],
     details: `
-      <h3>Hackathon Project</h3>
-      <p>Finalist project built during the Seattle Interactive Hackathon, enabling music sharing based on location with Spotify API.</p>
+      <h3>About</h3>
+      <p>Hackathon 1st place</p>
 
       <h3>Highlights</h3>
       <ul>
         <li>Real-time geolocation of users</li>
-        <li>Spotify now-playing sync</li>
-        <li>Mobile-first UX</li>
+        <li></li>
+        <li></li>
       </ul>
 
       <h3>Built With</h3>
-      <p>React Native, Firebase, Spotify API, Google Maps</p>
+      <p>React Native, Firebase, Google Maps</p>
     `
   }
 ];
