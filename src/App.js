@@ -8,19 +8,16 @@ import ChatWithGPT from "./pages/ChatWithGPT";
 import ResumeViewer from "./components/ResumeViewer";
 import GameCanvas from "./components/GameCanvas";
 import ProjectDetail from "./pages/ProjectDetail";
+import GlobalStyles from './styles/Global.css';
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/aboutme" element={<AboutMe />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/chat" element={<ChatWithGPT />} />
-        <Route path="/play" element={<GameCanvas />} />
-        <Route path="/resume" element={<ResumeViewer />} />
-        <Route path="/documentation" element={<Documentation />} />
-        <Route path="/projects/:slug" element={<ProjectDetail />} />
+        <Route path="/about" element={<AboutMe />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/search" element={<ChatWithGPT />} />
       </Routes>
     </Router>
   );

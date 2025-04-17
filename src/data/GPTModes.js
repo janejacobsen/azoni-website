@@ -1,68 +1,51 @@
 import getSystemPrompt from "../utils/getSystemPrompt";
 
 export const GPT_MODES = {
-  azoni: {
-    name: "Azoni-GPT",
+  clean: {
+    name: "Clean-GPT",
     systemPrompt: (tone) => {return getSystemPrompt(tone)},
-    welcomeMessage: () => {return `
-    Azoni-GPT is your interactive assistant to learn more about Charlton Smith — his background, skills, projects, and what makes him a standout candidate.
+    welcomeMessage: () => {return `Clean-GPT is your interactive assistant to find healthy, safe, and effective products for your family and your home.`
     
-    Recruiters: Paste a job description, and Azoni-GPT will explain why Charlton is a strong fit.
-    Hiring Managers: Ask about Charlton’s experience with specific technologies or projects.
-    Curious Visitors: Try questions like “What is Azoni AI?” or “What are some fun facts about Charlton?”
-    You can also switch between tones (Professional, Friendly, Casual) to see different communication styles.`
   },
     presetQuestions: [
-      "What’s Charlton’s background?",
-      "What is Azoni AI?",
-      "What projects has Charlton built?",
-      "What makes Charlton a strong hire?",
-      "What are some fun facts about Charlton?"
+      "What are the best lead free crayons for toddlers?",
+      "What is the best fragrance-free soap for babies?", 
+      "Is conventional baby food heavy metal free?",
+      "Where are the best places to shop for organic cotton baby and kid's clothing?"
     ],
     endpoint: "https://openrouter.ai/api/v1/chat/completions",
     model: "openai/gpt-3.5-turbo",
   },
-  pdf: {
-    name: "PDF-GPT - Coming Soon.",
+  ann: {
+    name: "ANN-GPT",
     systemPrompt: () => 
-    ({
-        role: "system",
-        content: `You are PDF-GPT, a strategic assistant for the Flesh and Blood trading card game. You specialize in card knowledge, meta analysis, gameplay tactics, deckbuilding advice, rules clarifications, event coverage, and lore. Always give answers based on official card text, tournament data, or lore when applicable. Be precise, helpful, and conversational — like a skilled player helping a friend.`
-    }),
+      ({
+          role: "system",
+          content: `You are Ann-GPT, you recommend products for families that are non-toxic, safe, and natural. When applicable, you should provide good, better, best products; provide links to purchase and verify they are working; and very briefly explain why you chose those products based on the user's concerns (i.e. kids, heavy metal, synthetic fragrance, or avoiding plastic). Price is not a priority, but you value convenience and ease-of-use. Offer 1-to-1 clean swaps for all the modern conveniences of life. Be kind and encouraging, but also direct and to-the-point. Use a friendly, conversational tone.`
+      }),
     welcomeMessage: () =>
-      "You're chatting with PDF-GPT. It will only answer based on uploaded documents.",
+      "You're chatting with Ann-GPT",
     presetQuestions: [
-      "What is this document about?",
+      "What are the best nonstick cookware options?",
+      "What are the best non-toxic cleaning products?",
     ],
     endpoint: "https://your-backend/pdf-chat",
     model: "gpt-3.5", // example
   },
-  fab: {
-    name: "FAB-GPT",
+  mark: {
+    name: "MARK-GPT",
     systemPrompt: () => 
       ({
           role: "system",
-          content: `You are FAB-GPT, a strategic assistant for the Flesh and Blood trading card game. You specialize in card knowledge, meta analysis, gameplay tactics, deckbuilding advice, rules clarifications, event coverage, and lore. Always give answers based on official card text, tournament data, or lore when applicable. Be precise, helpful, and conversational — like a skilled player helping a friend.`
+          content: `You are MarK-GPT, you recommend products that help families go back to traditional methods for homekeeping. If you were a house, you'd be a log cabin, untreated, with natural wool insulation. a strategic assistant for the Flesh and Blood trading card game. You specialize in card knowledge, meta analysis, gameplay tactics, deckbuilding advice, rules clarifications, event coverage, and lore. Give answers that don't rely on plastic, new methods, or expensive items. Use traditional methods (pre-plastic) new  when applicable. Be succint, straightforward, and old-fashioned - like a grandpa explaining how things used to be done.`
       }),
     welcomeMessage: () =>
-      "You're chatting with FAB-GPT",
+      "You're chatting with Mark-GPT",
     presetQuestions: [
-      "Who is the best hero?",
-    ],
-    endpoint: "https://your-backend/pdf-chat",
-    model: "gpt-3.5", // example
-  },
-  bench: {
-    name: "BENCH-GPT",
-    systemPrompt: () => 
-      ({
-          role: "system",
-          content: `You are BENCH-GPT, a strategic assistant for the Flesh and Blood trading card game. You specialize in card knowledge, meta analysis, gameplay tactics, deckbuilding advice, rules clarifications, event coverage, and lore. Always give answers based on official card text, tournament data, or lore when applicable. Be precise, helpful, and conversational — like a skilled player helping a friend.`
-      }),
-    welcomeMessage: () =>
-      "You're chatting with BENCH-GPT",
-    presetQuestions: [
-      "How much do you bench?",
+      "How can I waterproof my clothing and gear without PFAS or plastic?",
+      "How can I make my own soap?",
+      "Do I even really need soap?",
+      "What are the best wool sweaters for kids?"
     ],
     endpoint: "https://your-backend/pdf-chat",
     model: "gpt-3.5", // example

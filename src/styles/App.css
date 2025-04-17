@@ -1,93 +1,38 @@
-/* Remove default spacing from body and html */
-html, body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background-color: #0d1117; /* Match your dark theme */
-  color: #ffffff;
-  font-family: 'Outfit', sans-serif;
+/* src/App.css */
+body {
+  background-color: var(--color-cream);
+  color: var(--color-charcoal);
+  font-family: 'Lato', sans-serif;
 }
 
-/* Remove the white border that’s likely from browser default */
-* {
-  box-sizing: border-box;
-  border: none;
+h1, h2, h3 {
+  color: var(--color-clay);
+  font-family: 'Playfair Display', serif;
 }
 
-/* Optional: make sure the root element stretches */
-#root {
-  min-height: 100vh;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: linear-gradient(to bottom, #0d1117, #1f2937);
-  font-family: 'Outfit', sans-serif;
-  padding: 60px;
-}
-
-.main {
-  flex: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-top: 100px;
-  text-align: center;
-}
-
-.game-title {
-  font-size: 2.75rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #ffffff;
-}
-
-.home-intro {
-  font-size: 1.25rem;
-  font-weight: 300;
-  color: #cbd5e1;
-  margin-bottom: 2.5rem;
-}
-
-.card-grid {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  margin-bottom: 3rem;
-}
-
-.home-card {
-  background: #1e293b;
-  border-radius: 10px;
-  padding: 24px;
-  text-align: left;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  text-decoration: none;
+button {
+  background-color: var(--color-rose);
   color: white;
-  border: 1px solid #334155;
+  border: none;
+  padding: 0.6em 1.2em;
+  border-radius: 6px;
+  font-weight: bold;
 }
 
-.home-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  border-color: #3b82f6;
+button:hover {
+  background-color: var(--color-clay);
 }
 
-.home-card h2 {
-  font-size: 1.4rem;
-  margin-bottom: 0.5rem;
-  color: #ffffff;
+.card {
+  background-color: white;
+  border: 1px solid var(--color-sage);
+  padding: 1.5em;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.home-card p {
-  font-size: 1rem;
-  color: #cbd5e1;
-  margin-bottom: 1rem;
-}
-
-.card-link {
-  font-size: 0.9rem;
-  color: #3b82f6;
-  font-weight: 500;
+nav, footer {
+  background-color: var(--color-sage);
+  color: var(--color-charcoal);
+  padding: 1em;
 }
