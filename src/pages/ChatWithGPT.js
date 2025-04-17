@@ -7,7 +7,7 @@ import { GPT_MODES } from "../data/GPTModes";
 
 const ChatWithGPT = () => {
 
-  const [tone, setTone] = useState("friendly");
+  const [tone, setTone] = useState("funny");
   // const [messages, setMessages] = useState([getSystemPrompt(tone), { role: "assistant", content: getWelcomeMessage(tone) }]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -130,7 +130,7 @@ const ChatWithGPT = () => {
 
       <div className="tone-toggle">
           <span>🧠 Tone:</span>
-          {["professional", "friendly", "casual"].map((t) => (
+          {["professional", "friendly", "casual", "funny"].map((t) => (
             <button
               key={t}
               onClick={() => handleToneChange(t)}
