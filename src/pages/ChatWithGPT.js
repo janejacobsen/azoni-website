@@ -46,13 +46,12 @@ const ChatWithGPT = () => {
     setInput("");
     setLoading(true);
     setTimeout(() => setLoading(false), 2000); // 2-second cooldown
-
+    console.log(JSON.stringify(updatedMessages, null, 2));
+    
     // const endpoint =
     //   chatMode === "pdf"
     //     ? "https://your-backend/pdf-chat" // ← this will be your Flask PDF endpoint
     //     : "https://openrouter.ai/api/v1/chat/completions";
-    console.log(gptConfig)
-    console.log(updatedMessages)
     try {
       // const response = await axios.post("https://api.openai.com/v1/chat/completions", {
       //   model: "gpt-4",
@@ -79,11 +78,11 @@ const ChatWithGPT = () => {
           "X-Title": "AzoniGPT"                 // your app’s title
         }
       });
-      console.log("API response data:", response.data);
-      console.log(response)
+      // console.log("API response data:", response.data);
+      // console.log(response)
       
-      console.log("Full API response:", response);
-      console.log("System prompt:", gptConfig.systemPrompt(tone))
+      // console.log("Full API response:", response);
+      // console.log("System prompt:", gptConfig.systemPrompt(tone))
 
       const choices = response?.data?.choices;
       if (!choices || choices.length === 0) {

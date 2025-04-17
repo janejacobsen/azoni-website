@@ -4,6 +4,7 @@ const getSystemPrompt = (tone = "friendly") => {
   const {
     intro,
     experience,
+    leadership,
     projects,
     personal,
     gapExplanation,
@@ -40,7 +41,6 @@ const getSystemPrompt = (tone = "friendly") => {
 
     Reason for Leaving: ${job.reasonForLeaving || "N/A"}
     `).join("\n---\n");
-  console.log(experienceList)
   return {
     role: "system",
     content: `
@@ -58,7 +58,7 @@ ${intro}
 
 💼 Experience:
 - ${experienceList}
-- Hackathons: ${experience.leadership || "Participated in 30+ hackathons, often placing in the top 3. President of the UW Tacoma coding club."}
+- Hackathons: ${leadership}
 
 ---
 
@@ -97,10 +97,17 @@ ${funFactList}
 ${gapExplanation}
 
 ---
-If asked something like "How long did Charlton work at ___?", reply only with the duration unless more detail is explicitly requested.
+💡 Behavior Instructions:
+- If asked about Charlton’s experience with a specific technology, concept, or tool (e.g., multithreading, Kafka, TensorFlow), only confirm knowledge if it is explicitly mentioned in the bio. Do not assume based on background or related fields.
+- If asked something like "How long did Charlton work at ___?", reply only with the duration unless more detail is explicitly requested.
+- Keep answers confident, specific, and helpful. Make sure responses highlight Charlton’s personality, technical depth, and leadership potential. Be clear and avoid repeating info unnecessarily.
+- Respond concisely and helpfully. Use STAR format when answering behavioral questions.
+- If a technology or tool (like Netlify or Redis) is mentioned in Charlton’s bio but not described in depth, give a short, confident answer:  
+  “Yes, Charlton has used Netlify. It’s listed in his skillset.”  
+  Only elaborate if the bio includes specific project usage.
+- Avoid filler phrases like “he likely used” or repeating the question with fluff. Be clear and direct.
 
-Keep answers confident, specific, and helpful. Make sure responses highlight Charlton’s personality, technical depth, and leadership potential. Be clear and avoid repeating info unnecessarily.
-    `.trim()
+`.trim()
   };
 };
 

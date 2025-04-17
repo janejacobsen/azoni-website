@@ -110,10 +110,82 @@ const charltonBio = {
       reasonForLeaving:
         "Charlton left T-Mobile to pursue new challenges and focus on more creative, user-facing projects. His interest in AI and real-time systems led him to begin working on Azoni AI and other independent tools."
     },
-    leadership:
-      "Served as president of the UW Tacoma coding club and attended over 30 hackathons, frequently placing in the top 3. Hackathons became a launchpad for many of his project ideas, including Oli Fitness and HashMaps.",
+    slalom: {
+      role: "Engineer",
+      company: "Slalom Consulting",
+      duration: "6 months",
+      summary:
+        "Worked on the Cross-Market team designing thoughtful, stakeholder-driven solutions using Salesforce tools and architecture best practices. Gained multiple Salesforce certifications and contributed to internal knowledge sharing.",
+      highlights: [
+        "Salesforce Certified Integration Architect Designer, Administrator, and Platform App Builder",
+        "Collaborated with cross-functional teams to design scalable client-facing solutions",
+        "Worked with stakeholders to translate business needs into technical implementations within the Salesforce ecosystem"
+      ],
+      stories: {
+        certificationPace: {
+          question: "Tell me about a time you achieved something under a tight deadline.",
+          situation: "Slalom wanted me to get multiple Salesforce certifications early in the engagement to qualify for upcoming client work.",
+          task: "Earn three Salesforce certifications in under two months while onboarding and supporting projects.",
+          action: "Created a structured study plan, worked nights and weekends, and engaged with internal SME resources for review sessions.",
+          result: "Achieved all three certifications within six weeks and was immediately placed on a client-facing project with high visibility."
+        }
+      },
+      reasonForLeaving:
+        "Slalom was a short-term engagement designed to prepare Charlton for client consulting work. He transitioned out after completing certification and delivery milestones to pursue longer-term engineering roles."
+    },
+  
+    oliFitness: {
+      role: "Co-Founder & Technical Lead",
+      company: "OLI Fitness",
+      duration: "2 years 3 months",
+      tenure: "2 years",
+      summary:
+        "Built a computer vision system using Microsoft Kinect to help powerlifters avoid injury. Focused on biomechanical joint movement analysis to detect risky lifting patterns in real-time.",
+      highlights: [
+        "Developed a C# Kinect-based motion capture system for analyzing lifts",
+        "Designed and trained a rule-based AI model to recognize potentially injurious movement patterns",
+        "Presented the concept at hackathons and used it as a launchpad for his undergrad research project",
+        "Finalist for both UW tacoma, and Seattles annual business plan competition"
+      ],
+      reasonForLeaving:
+        "Charlton paused development of OLI Fitness to focus on other projects and engineering roles after completing the initial prototype phase."
+    },
+  
+    nucamp: {
+      role: "Computer Science Instructor",
+      company: "Nucamp",
+      duration: "5 months",
+      tenure: "5 months",
+      summary:
+        "Taught full stack development and computer science fundamentals to new programmers. Helped students understand key concepts including git, React, backend APIs, and deployment workflows.",
+      highlights: [
+        "Created live examples and interactive assignments to demystify coding for beginners",
+        "Mentored students 1-on-1 through career changes and bootcamp projects",
+        "Covered HTML, CSS, JavaScript, React, and git in a structured course format"
+      ],
+      reasonForLeaving:
+        "Completed the teaching term and returned to full-time software development."
+    },
+  
+    givesafe: {
+      role: "Ruby on Rails Intern",
+      company: "Givesafe (now Samaritan)",
+      duration: "5 months",
+      tenure: "5 months",
+      summary:
+        "Supported backend and feature development for a social impact platform helping people without housing access resources and move forward.",
+      highlights: [
+        "Contributed to a Ruby on Rails codebase and helped integrate user-facing features",
+        "Collaborated with a small dev team on core product iterations",
+        "Tested and fixed bugs in the mobile API and admin dashboard"
+      ],
+      reasonForLeaving:
+        "Completed internship term and returned to school to finish his undergraduate degree."
+    },
+  
   },
-
+  leadership:
+    "Served as president of the UW Tacoma coding club and attended over 30 hackathons, frequently placing in the top 3. Hackathons became a launchpad for many of his project ideas, including Oli Fitness and HashMaps.",
   projects: [
     {
       name: "Azoni AI",
@@ -153,7 +225,16 @@ const charltonBio = {
     "GitHub Actions",
     "Mentorship",
   ],
-
+  // Not used yet.
+  stack: {
+    frontend: ["React", "JavaScript", "HTML", "CSS"],
+    backend: ["Node.js", "Python", "Flask"],
+    devops: ["AWS", "Render", "Netlify", "GitHub Actions"],
+    databases: ["PostgreSQL", "SQLite", "Firebase", "Redis"],
+    ai: ["OpenAI API", "LangChain"],
+    networking: ["WebSockets"],
+    softSkills: ["Mentorship", "Product Thinking"]
+  },
   ai: {
     motivation:
       "Charlton is drawn to AI for its transformative power. It's changed how he learns, builds, and interacts with technology.",
@@ -177,7 +258,6 @@ const charltonBio = {
     "Charlton ranked #1 in the U.S. and #2 globally in StarCraft 2 2v2 random queue.",
     "He lead climbed a 5.12a outdoors and still enjoys bouldering and strength sports.",
     "He built a Twitter bot that replies to mentions with OpenAI-generated responses based on logged conversations.",
-    "He created a full multiplayer game engine with avatars, chat, AI logic, skill trees, and item systems — built entirely from scratch.",
     "He still plays RuneScape and Neverwinter Nights — nostalgic experiences that shaped his love of systems and progression.",
   ],
 

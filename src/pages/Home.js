@@ -39,14 +39,14 @@ const sections = [
     description: "My Resume!",
   },
 ];
-const posts = [
-  {
-    title: "Ghibli Style Image Gen",
-    image: "/avatars/charlton-ghibli.png",
-    snippet: "Experimenting with cartoon-to-anime image transfer using ControlNet + a fine-tuned LCM model.",
-    link: "/projects/ghibli-style"
-  },
-];
+// const posts = [
+//   {
+//     title: "Ghibli Style Image Gen",
+//     image: "/avatars/charlton-ghibli.png",
+//     snippet: "Experimenting with cartoon-to-anime image transfer using ControlNet + a fine-tuned LCM model.",
+//     link: "/projects/ghibli-style"
+//   },
+// ];
 
 const Home = () => {
   return (
@@ -84,7 +84,7 @@ const Home = () => {
             )
           )}
         </div>
-        <div className="ai-blog-section">
+        {/* <div className="ai-blog-section">
           <h2>Whats new with AI?</h2>
           <div className="ai-blog-grid">
             
@@ -97,7 +97,7 @@ const Home = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
         {/* <GameCanvas /> */}
       </main>
       <TryAzoni />
